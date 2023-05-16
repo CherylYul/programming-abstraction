@@ -16,6 +16,7 @@ int reverseNum(int n);
 
 int factorial(int n);
 int combinations(int n, int k);
+int permutations(int n, int k);
 int square(int n);
 int power(int n, int k);
 int roundToNearestInt(double n);

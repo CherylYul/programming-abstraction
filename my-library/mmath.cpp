@@ -96,6 +96,24 @@ int combinations(int n, int k)
 }
 
 /*
+ * Function: permutations(n,k)
+ * Usage: int nWays = permutations(int n, int k)
+ * -----------------------------------------------
+ * Returns number of ways a particular set can be arranged
+ */
+
+int permutations(int n, int k)
+{
+    int result = 1;
+    for (int i = n; k > 0; i--)
+    {
+        result *= i;
+        k -= 1;
+    }
+    return result;
+}
+
+/*
  * Function: square(n)
  * Usage: int result = square(int num);
  * -----------------------------------------------

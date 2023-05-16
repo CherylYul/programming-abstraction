@@ -50,6 +50,25 @@ double randomReal(double low, double high)
 }
 
 /*
+ * Implementation notes: randomReal
+ * ------------------------------------------------------
+ * The code for randomAverage calls randomReal(0, 1) trials times then
+ * return average values
+ */
+
+double randomAverage(int trials)
+{
+    initRandomSeed();
+    double result = 0;
+    for (int i = 0; i < trials; i++)
+    {
+        double d = rand() / (double(RAND_MAX) + 1);
+        result += d;
+    }
+    return result / trials;
+}
+
+/*
  * Implementation notes: randomChance
  * ------------------------------------------------------
  * The code for randomChance calls randomReal(0, 1) and then

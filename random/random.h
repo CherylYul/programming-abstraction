@@ -28,6 +28,15 @@ int randomInteger(int low, int high);
 double randomReal(double low, double high);
 
 /*
+ * Function: randomAverage
+ * Usage: double n = randomReal(trials);
+ * ------------------------------------------------------
+ * Returns average after a specified number of trials entered by user
+ */
+
+double randomAverage(int trials);
+
+/*
  * Function: randomChance
  * Usage: if (randomChance(p)) ...
  * ------------------------------------------------------

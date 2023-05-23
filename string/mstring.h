@@ -41,4 +41,13 @@ void trimStartInPlace(std::string &str);
 std::string trimEnd(std::string str);
 std::string trimStart(std::string str);
 
+std::string substrOne(std::string str, int pos, char n);
+std::string capitalize(std::string str);
+std::string acronym(std::string str);
+
+std::string removeCharacters(std::string str, std::string removeStr);
+void removeCharactersInPlace(std::string &str, std::string removeStr);
+
+void error(std::string msg);
+
 #endif

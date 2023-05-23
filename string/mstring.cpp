@@ -6,6 +6,7 @@
 
 #include <string>
 #include <cctype>
+#include <optional>
 #include "mstring.h"
 using namespace std;
 
@@ -331,4 +332,117 @@ string trimStart(string str)
     string str2 = str;
     trimStartInPlace(str2);
     return str2;
+}
+
+/*
+ * Function: substrOne
+ * Usage: string str = substrOne(str, pos, n);
+ * -----------------------------------------------
+ * Returns the substring of str beginning at position pos
+ * and containing at most character n
+ */
+
+string substrOne(string str, int pos, char n)
+{
+    if (pos > str.length())
+        error("position should smaller than the length of the string!");
+
+    int end = 0;
+    for (int i = str.length() - 1; i > pos; i--)
+    {
+        if (str[i] == n)
+        {
+            end = i;
+            break;
+        }
+    }
+
+    string result;
+    if (end != 0)
+    {
+        for (int i = pos; i < end; i++)
+            result += str[i];
+        return result;
+    }
+    return "not found";
+}
+
+/*
+ * Function: capitalize
+ * Usage: string str = capitalize(str);
+ * -----------------------------------------------
+ * Convert the initial character into uppercase, other to lowercase
+ */
+
+std::string capitalize(std::string str)
+{
+    char initialChar = toupper(str[0]);
+    string newStr;
+    for (int i = 1; i < str.length(); i++)
+    {
+        newStr += tolower(str[i]);
+    }
+    return initialChar + newStr;
+}
+
+/*
+ * Function: acronym
+ * Usage: string str = acronym(str);
+ * -----------------------------------------------
+ * Returns acronym form of string. Acronym is a new word formed by combining,
+ * order, initial letters of series of words.
+ */
+
+std::string acronym(std::string str)
+{
+    string newStr;
+    if (isalpha(str[0]))
+        newStr += str[0];
+    for (int i = 0; i < str.length(); i++)
+    {
+        if (isspace(str[i]) || !isalpha(str[i]))
+            newStr += str[i + 1];
+    }
+    return newStr;
+}
+
+/*
+ * Function: removeCharacters
+ * Usage: string str = removeCharacters(str, removeStr);
+ * -----------------------------------------------
+ * Returns a new string after removing all instances of the characters in
+ * removeStr without changing the original one.
+ */
+
+string removeCharacters(string str, string removeStr)
+{
+    string str2 = str;
+    removeCharactersInPlace(str2, removeStr);
+    return str2;
+}
+
+/*
+ * Function: removeCharactersInPlace
+ * Usage: removeCharactersInPlace(str, removeStr);
+ * -----------------------------------------------
+ * Change str into a new string after removing all instances of the characters in removeStr
+ */
+
+void removeCharactersInPlace(string &str, string removeStr)
+{
+    string newStr = str;
+    int count = 0;
+    for (int i = 0; i < newStr.length(); i++)
+        for (int j = 0; j < removeStr.length(); j++)
+            if (newStr[i] == removeStr[j])
+            {
+                str.erase(i - count, 1);
+                count++;
+            }
+}
+
+void error(string msg)
+{
+    cerr << msg << endl;
+    exit(EXIT_FAILURE);
 }

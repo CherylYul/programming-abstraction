@@ -4,9 +4,9 @@
  * Implement my useful functions to handle string related problems
  */
 
+#include <iostream>
 #include <string>
 #include <cctype>
-#include <optional>
 #include "mstring.h"
 using namespace std;
 
@@ -33,19 +33,6 @@ int getInteger(string prompt)
         cout << "Illegal integer format. Try again." << endl;
     }
     return value;
-}
-
-/*
- * Function: copyStream
- * Usage: copyStream(infile, outfile);
- * -----------------------------------------------
- * Copies all the characters from one input stream to another
- */
-void copyStream(istream &is, ostream &os)
-{
-    char ch;
-    while (is.get())
-        os.put(ch);
 }
 
 /*

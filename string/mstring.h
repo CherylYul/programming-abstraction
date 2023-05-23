@@ -7,13 +7,8 @@
 #pragma once
 #ifndef _mstring_h
 #define _mstring_h
-#include <iostream>
-#include <sstream>
-#include <fstream>
 
 int getInteger(std::string prompt);
-void copyStream(std::istream &is, std::ostream &os);
-
 int countSpaces(std::string str);
 
 bool startsWith(std::string str, std::string prefix);

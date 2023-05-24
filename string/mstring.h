@@ -8,7 +8,6 @@
 #ifndef _mstring_h
 #define _mstring_h
 
-int getInteger(std::string prompt);
 int countSpaces(std::string str);
 
 bool startsWith(std::string str, std::string prefix);
@@ -26,7 +25,8 @@ void toLowerCaseInPlace(std::string &str);
 std::string toUpperCase(std::string str);
 std::string toLowerCase(std::string str);
 
-bool isPalindrome(std::string str);
+bool isWordPalindrome(std::string str);
+bool isSentencePalindrome(std::string str);
 
 std::string secondHalf(std::string str);
 
@@ -42,6 +42,14 @@ std::string acronym(std::string str);
 
 std::string removeCharacters(std::string str, std::string removeStr);
 void removeCharactersInPlace(std::string &str, std::string removeStr);
+
+std::string removeDoubledLetters(std::string str);
+std::string replaceAll(std::string str, char c1, char c2);
+std::string replaceAll(std::string str, std::string s1, std::string s2);
+
+std::string createRegularPlural(std::string word);
+std::string createOrdinalForm(int n);
+std::string addCommas(int digits);
 
 void error(std::string msg);
 

@@ -11,31 +11,6 @@
 using namespace std;
 
 /*
- * Function: getInteger
- * Usage: int n = getInteger(prompt);
- * -----------------------------------------------
- * Requests an integer value from user, if input is not a legal integer
- * the implementation will give the user a chance to reenter the value
- */
-
-int getInteger(string prompt)
-{
-    int value;
-    string line;
-    while (true)
-    {
-        cout << prompt;
-        getline(cin, line);
-        istringstream stream(line);
-        stream >> value >> ws;
-        if (!stream.fail() && stream.eof())
-            break;
-        cout << "Illegal integer format. Try again." << endl;
-    }
-    return value;
-}
-
-/*
  * Function: countSpaces
  * Usage: int numSpaces = countSpaces(str);
  * -----------------------------------------------
@@ -221,16 +196,39 @@ string toLowerCase(string str)
 }
 
 /*
- * Function: isPalindrome
- * Usage: isPalindrome(str);
+ * Function: isWordPalindrome
+ * Usage: isWordPalindrome(str);
  * -----------------------------------------------
  * Returns true if a string is a palindrome. A palindrome is a word that
  * reads identically backward and forward
  */
 
-bool isPalindrome(string str)
+bool isWordPalindrome(string str)
 {
     return str == reverse(str);
+}
+
+/*
+ * Function: isSentencePalindrome
+ * Usage: isSentencePalindrome(str);
+ * -----------------------------------------------
+ * Returns true if a sentence is palindrome by ignoring punctualtion
+ * and differences
+ */
+
+bool isSentencePalindrome(string str)
+{
+    string rev = reverse(str);
+    string str2;
+    string rev2;
+    for (int i = 0; i < str.length(); i++)
+    {
+        if (!ispunct(str[i]) && !isspace(str[i]))
+            str2 += tolower(str[i]);
+        if (!ispunct(rev[i]) && !isspace(rev[i]))
+            rev2 += tolower(rev[i]);
+    }
+    return str2 == rev2;
 }
 
 /*
@@ -426,6 +424,124 @@ void removeCharactersInPlace(string &str, string removeStr)
                 str.erase(i - count, 1);
                 count++;
             }
+}
+
+/*
+ * Function: removeDoubledLetters
+ * Usage: removeDoubledLetters(str);
+ * -----------------------------------------------
+ * Returns a new words that remove double letters
+ */
+
+string removeDoubledLetters(string str)
+{
+    string newStr = str;
+    int count = 0;
+    for (int i = 1; i < str.length(); i++)
+        if (str[i] == str[i - 1])
+        {
+            newStr.erase(i - count, 1);
+            count++;
+        }
+    return newStr;
+}
+
+/*
+ * Function: replaceAll
+ * Usage: replaceAll(str, c1, c2);
+ * -----------------------------------------------
+ * Returns a copy of str with every occurence of c1 replaced by c2
+ */
+
+string replaceAll(string str, char c1, char c2)
+{
+    string newStr = str;
+    string strToReplace(1, c2);
+    for (int i = 0; i < str.length(); i++)
+        if (str[i] == c1)
+            newStr.replace(i, 1, strToReplace);
+    return newStr;
+}
+
+/*
+ * Function: replaceAll
+ * Usage: string str = replaceAll(str, s1, s2);
+ * -----------------------------------------------
+ * Returns a copy of str with every occurence of s1 replaced by s2
+ */
+
+string replaceAll(string str, string s1, string s2)
+{
+    string newStr = str;
+    while (newStr.find(s1) < newStr.length())
+        newStr.replace(newStr.find(s1), s1.length(), s2);
+    return newStr;
+}
+
+/*
+ * Function: createRegularPlural
+ * Usage: string str = createRegularPlural(word);
+ * -----------------------------------------------
+ * Returns plural word following standard English rules
+ */
+
+string createRegularPlural(string word)
+{
+    switch (word.at(word.length() - 1))
+    {
+    case 's':
+    case 'x':
+    case 'z':
+    case 'h':
+        if (word.at(word.length() - 2) == 'c' || word.at(word.length() - 2) == 's')
+            return word + "es";
+        else
+            return word + "s";
+    case 'y':
+        return word.substr(0, word.length() - 1) + "ies";
+    default:
+        return word + "s";
+    }
+}
+
+/*
+ * Function: createOrdinalForm
+ * Usage: string str = createOrdinalForm(n);
+ * -----------------------------------------------
+ * From the cardinal number n return the ordinal one with proper suffix.
+ */
+
+string createOrdinalForm(int n)
+{
+    string ord = to_string(n);
+    if (n == 11 || n == 12 || n == 13)
+        return ord + "th";
+    switch (ord.at(ord.length() - 1))
+    {
+    case '1':
+        return ord + "st";
+    case '2':
+        return ord + "nd";
+    case '3':
+        return ord + "rd";
+    default:
+        return ord + "th";
+    }
+}
+
+/*
+ * Function: addCommas
+ * Usage: string str = addCommas(n);
+ * -----------------------------------------------
+ * Returns string that seperates the digits into groups of three.
+ */
+
+string addCommas(int digits)
+{
+    string str = to_string(digits);
+    for (int i = str.length() - 3; i > 0; i = i - 3)
+        str.insert(i, ",");
+    return str;
 }
 
 void error(string msg)

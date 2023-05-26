@@ -19,6 +19,6 @@ double distF2I(double dist);
 double distI2F(double dist);
 
 double windChill(double windSpeed, double degF);
-void error(string msg);
+void error(std::string msg);
 
 #endif

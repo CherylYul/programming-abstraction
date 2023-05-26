@@ -78,7 +78,7 @@ double distM2F(double dist)
 
 double distF2M(double dist)
 {
-    dist * 0.0254;
+    return dist * 0.0254;
 }
 
 /*

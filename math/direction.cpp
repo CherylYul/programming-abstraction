@@ -49,3 +49,28 @@ string directionToString(Direction dir)
         return "???";
     }
 }
+
+ostream &operator<<(ostream &os, Direction dir)
+{
+    return os << directionToString(dir);
+}
+
+/*
+ * Operators: ++
+ * Usage: for (Direction dir = NORTH; dir <= WEST; dir++) ...
+ * ------------------------------------------------------
+ * Overload the prefix and suffix ++ to make dir++ work
+ */
+
+Direction operator++(Direction &dir)
+{
+    dir = Direction(dir + 1);
+    return dir;
+}
+
+Direction operator++(Direction &dir, int)
+{
+    Direction old = dir;
+    dir = Direction(dir + 1);
+    return old;
+}

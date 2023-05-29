@@ -52,4 +52,8 @@ Direction rightFrom(Direction dir);
 
 std::string directionToString(Direction dir);
 
+std::ostream &operator<<(std::ostream &os, Direction dir);
+Direction operator++(Direction &dir);
+Direction operator++(Direction &dir, int);
+
 #endif

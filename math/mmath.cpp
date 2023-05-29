@@ -6,6 +6,7 @@
 
 #include <iostream>
 #include <cmath>
+#include <cstdlib>
 #include "mmath.h"
 using namespace std;
 
@@ -264,4 +265,39 @@ void primeFactorization(int n)
             start += 1;
         }
     }
+}
+
+/*
+ * Function: solveQuadratic
+ * Usage: solveQuadratic(a, b, c, x1, x2);
+ * ------------------------------------------------------
+ * Solve a quadratic equation for the coefficients a,b and c
+ * The roots are returned in the reference parameters x1 and x2
+ */
+
+void solveQuadratic(double a, double b, double c, double &x1, double &x2)
+{
+    if (a == 0)
+        error("The coefficient a must be nonzero.");
+    double disc = b * b - 4 * a * c;
+    if (disc < 0)
+        error("This equation has no real roots.");
+    double sqrtDisc = sqrt(disc);
+    x1 = (-b + sqrtDisc) / (2 * a);
+    x2 = (-b - sqrtDisc) / (2 * a);
+}
+
+/*
+ * Function: error
+ * Usage: error(msg);
+ * ------------------------------------------------------
+ * Writes the string msg to the cerr stream and then exit
+ * the program with a standard status value indicating that
+ * a failure has occurred
+ */
+
+void error(string msg)
+{
+    cerr << msg << endl;
+    exit(EXIT_FAILURE);
 }

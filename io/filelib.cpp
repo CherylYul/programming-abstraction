@@ -98,63 +98,6 @@ void displayLine(ifstream &infile)
 // }
 
 /*
- * Function: getInteger
- * Usage: int n = getInteger(prompt);
- * -----------------------------------------------
- * Requests an integer value from user, if input is not a legal integer
- * the implementation will give the user a chance to reenter the value
- */
-
-int getInteger(string prompt)
-{
-    int value;
-    string line;
-    while (true)
-    {
-        cout << prompt;
-        getline(cin, line);
-        istringstream stream(line);
-        stream >> value >> ws;
-        if (!stream.fail() && stream.eof())
-            break;
-        cout << "Illegal integer format. Try again." << endl;
-    }
-    return value;
-}
-
-/*
- * Function: stringToInteger
- * Usage: int n = stringToInteger(str);
- * -----------------------------------------------
- * Requests an integer value from user, if input is not a legal integer,
- * extracts error message
- */
-
-int stringToInteger(string str)
-{
-    int value;
-    istringstream stream(str);
-    stream >> value >> ws;
-    if (stream.fail() || !stream.eof())
-        error("stringToInteger: Illegal integer format");
-    return value;
-}
-
-/*
- * Function: integerToString
- * Usage: string str = integerToString(n);
- * -----------------------------------------------
- * Turn an integer value to string type
- */
-
-string integerToString(int n)
-{
-    ostringstream stream;
-    stream << n;
-    return stream.str();
-}
-
-/*
  * Function: printLongestLine
  * Usage: printLongestLine(n);
  * -----------------------------------------------

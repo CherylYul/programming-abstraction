@@ -15,10 +15,6 @@ void displayChar(std::ifstream &infile);
 void displayLine(std::ifstream &infile);
 // void readEntireFile(istream &is, Vector<string> &lines);
 
-int getInteger(std::string prompt);
-int stringToInteger(std::string str);
-std::string integerToString(int n);
-
 void printLongestLine(std::ifstream &infile);
 void reportLineWordChar(std::ifstream &infile, int &charCount, int &wordCount, int &lineCount);
 int countSpace(std::string str);

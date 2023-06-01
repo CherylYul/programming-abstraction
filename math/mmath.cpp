@@ -83,6 +83,32 @@ int factorial(int n)
 }
 
 /*
+ * Function: gcd
+ * Usage: int result = gcd(int x, int y)
+ * -----------------------------------------------
+ * Uses Euclid's algorithm to calculate the greatest common divisor.
+ * Ex: the gcd of 35 and 49 is 7. GCD includes 3 steps:
+ *
+ * 1. Divide x by y and compute the remainder r
+ * 2. If r = 0, the algorithm is complete, and the answer is y
+ * 3. If not, set x to the old value of y, set y = r, repeat the process.
+ */
+
+int gcd(int x, int y)
+{
+    if (y == 0 || x == 0)
+        error("The 2 integers must be greater than 0!");
+    int r = x % y;
+    while (r != 0)
+    {
+        x = y;
+        y = r;
+        r = x % y;
+    }
+    return y;
+}
+
+/*
  * Function: combinations(n,k)
  * Usage: int nWays = combinations(int n, int k)
  * -----------------------------------------------

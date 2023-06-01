@@ -15,6 +15,7 @@ double addNInput(int n);
 int reverseNum(int n);
 
 int factorial(int n);
+int gcd(int x, int y);
 int combinations(int n, int k);
 int permutations(int n, int k);
 int square(int n);

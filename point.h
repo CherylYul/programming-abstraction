@@ -1,7 +1,7 @@
 /*
  * File: point.h
  * --------------------------------------------
- * This interfaces exports the Point class, which represents a point on a 
+ * This interfaces exports the Point class, which represents a point on a
  * 2-dimensional integer grid.
  */
 
@@ -9,41 +9,42 @@
 #define _point_h
 #include <string>
 
-class Point{
+class Point
+{
 public:
-/*
- * Constructor: Point
- * Usage: Point origin;
- *        Point pt(xc, yc);
- * --------------------------------------------
- * Creates a point object. The default constructor sets the coordinates to
- * 0; the second form sets the coordinates to xc and yc
- */
+    /*
+     * Constructor: Point
+     * Usage: Point origin;
+     *        Point pt(xc, yc);
+     * --------------------------------------------
+     * Creates a point object. The default constructor sets the coordinates to
+     * 0; the second form sets the coordinates to xc and yc
+     */
     Point();
     Point(int xc, int yc);
-/*
- * Methods: getX, getY
- * Usage: int x = pt.getX();
- *        int y = pt.getY();
- * --------------------------------------------
- * These methods returns the x and y coordinates of the point
- */
+    /*
+     * Methods: getX, getY
+     * Usage: int x = pt.getX();
+     *        int y = pt.getY();
+     * --------------------------------------------
+     * These methods returns the x and y coordinates of the point
+     */
     int getX();
     int getY();
-/*
- * Method: toString
- * Usage: string str = pt.toString();
- * --------------------------------------------
- * Returns a string representation of the Point in the form "(x, y)"
- */
+    /*
+     * Method: toString
+     * Usage: string str = pt.toString();
+     * --------------------------------------------
+     * Returns a string representation of the Point in the form "(x, y)"
+     */
     std::string toString();
 
-/* Friend declaration */
+    /* Friend declaration */
 
     friend bool operator==(Point p1, Point p2);
 
-/* Instance variables */
-// private:
+    /* Instance variables */
+    // private:
     int x;
     int y;
 };
@@ -55,7 +56,7 @@ public:
  * Overloads the << operator so that it is able to display Point values.
  */
 
-std::ostream & operator<<(std::ostream & os, Point pt);
+std::ostream &operator<<(std::ostream &os, Point pt);
 
 /*
  * Operator: ==

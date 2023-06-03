@@ -5,8 +5,8 @@
  */
 
 #include <string>
-#include "io/filelib.h"
-#include "io/filelib.cpp"
+#include "string/strlib.h"
+#include "string/strlib.cpp"
 #include "point.h"
 using namespace std;
 
@@ -50,7 +50,7 @@ int Point::getY()
 /*
  * Implmentation notes: toString
  * --------------------------------------------
- * The implementation of toString uses the integerToString function from 
+ * The implementation of toString uses the integerToString function from
  * filelib library
  */
 
@@ -59,14 +59,17 @@ string Point::toString()
     return "(" + integerToString(x) + ", " + integerToString(y) + ")";
 }
 
-bool operator==(Point p1, Point p2) {
+bool operator==(Point p1, Point p2)
+{
     return p1.x == p2.x && p1.y == p2.y;
 }
 
-bool operator!=(Point p1, Point p2) {
+bool operator!=(Point p1, Point p2)
+{
     return !(p1 == p2);
 }
 
-ostream & operator<<(ostream & os, Point pt) {
+ostream &operator<<(ostream &os, Point pt)
+{
     return os << pt.toString();
 }

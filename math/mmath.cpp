@@ -8,6 +8,8 @@
 #include <cmath>
 #include <cstdlib>
 #include "mmath.h"
+#include "../error/error.h"
+#include "../error/error.cpp"
 using namespace std;
 
 /*
@@ -311,19 +313,4 @@ void solveQuadratic(double a, double b, double c, double &x1, double &x2)
     double sqrtDisc = sqrt(disc);
     x1 = (-b + sqrtDisc) / (2 * a);
     x2 = (-b - sqrtDisc) / (2 * a);
-}
-
-/*
- * Function: error
- * Usage: error(msg);
- * ------------------------------------------------------
- * Writes the string msg to the cerr stream and then exit
- * the program with a standard status value indicating that
- * a failure has occurred
- */
-
-void error(string msg)
-{
-    cerr << msg << endl;
-    exit(EXIT_FAILURE);
 }

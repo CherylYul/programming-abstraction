@@ -30,6 +30,5 @@ bool isPrime(int n);
 
 void primeFactorization(int n);
 void solveQuadratic(double a, double b, double c, double &x1, double &x2);
-void error(string msg);
 
 #endif

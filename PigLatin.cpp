@@ -13,6 +13,7 @@
 #include <iostream>
 #include <string>
 #include <cctype>
+#include "lexicon.h"
 using namespace std;
 
 /* Function Prototype */
@@ -20,6 +21,7 @@ string lineToPigLatin(string line);
 string wordToPigLatin(string word);
 int findFirstVowel(string word);
 bool isVowel(char ch);
+void pigEnglish();
 
 /* main program */
 int main()
@@ -41,7 +43,7 @@ int main()
  * The variable start keeps track of the index position at which the current word begins.
  * As a special case, the code sets start to -1 to indicate the the beginning of the current
  * word has not yet been encountered
- * 
+ *
  * string lineToPigLatin(string line) {
  *      TokenScanner scanner(line);
  *      string result = "";
@@ -149,5 +151,24 @@ bool isVowel(char ch)
         return true;
     default:
         return false;
+    }
+}
+
+/*
+ * Function: pigEnglish();
+ * ---------------------------------------
+ * Find all English words that remain words when convert to Pig Latin
+ */
+
+void pigEnglish()
+{
+    Lexicon english("EnglishWords.dat");
+    for (string word : english)
+    {
+        string pig = wordToPigLatin(word);
+        if (pig != word && english.contains(pig))
+        {
+            cout << word << " -> " << pig << endl;
+        }
     }
 }

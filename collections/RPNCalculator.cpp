@@ -14,7 +14,7 @@
 #include "string/strlib.cpp"
 #include "error/error.h"
 #include "error/error.cpp"
-// #include <stack.h>
+#include <stack.h>
 using namespace std;
 
 void applyOperator(char op, Stack<double> &operandStack);

@@ -7,16 +7,16 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include "../error/error.h"
-#include "../error/error.cpp"
-#include "map.h"
+#include <map>
+#include "../string/mstring.h"
+#include "../string/mstring.cpp"
 using namespace std;
 
-void readCodeFile(string filename, Map<string, string> &map);
+void readCodeFile(string filename, map<string, string> &map);
 
 int main()
 {
-    Map<string, string> airportCodes;
+    map<string, string> airportCodes;
     readCodeFile("AirportCodes.txt", airportCodes);
     while (true)
     {
@@ -26,15 +26,15 @@ int main()
         if (line == "")
             break;
         string code = toUpperCase(line);
-        if (airportCodes.containsKey(code))
-            cout << airportCodes.get(code) << endl;
+        if (airportCodes.find(code) != airportCodes.end())
+            cout << airportCodes[code] << endl;
         else
             cout << "Not found" << endl;
     }
     return 0;
 }
 
-void readCodeFile(string filename, Map<string, string> &map)
+void readCodeFile(string filename, map<string, string> &map)
 {
     ifstream infile;
     infile.open(filename.c_str());
@@ -46,7 +46,7 @@ void readCodeFile(string filename, Map<string, string> &map)
         if (line.length() < 4 || line[3] != '=')
             error("Illegal data line: " + line);
         string code = toUpperCase(line.substr(0, 3));
-        map.put(code, line.substr(4));
+        map.insert(std::pair<string, string>(code, line.substr(4)));
     }
     infile.close();
 }

@@ -9,20 +9,22 @@
 #include <iomanip>
 #include <string>
 #include <cctype>
+#include <map>
+#include <vector>
 #include "../io/filelib.h"
 #include "../io/filelib.cpp"
-#include "map.h"
-#include "vector.h"
+#include "../string/mstring.h"
+#include "../string/mstring.cpp"
 using namespace std;
 
-void countWords(istream &stream, Map<string, int> &wordCounts);
-void displayWordCounts(Map<string, int> &wordCounts);
-void extractWords(string line, Vector<string> &word);
+void countWords(istream &stream, map<string, int> &wordCounts);
+void displayWordCounts(map<string, int> &wordCounts);
+void extractWords(string line, vector<string> &word);
 
 int main()
 {
     ifstream infile;
-    Map<string, int> wordCounts;
+    map<string, int> wordCounts;
     promptUserForFile(infile, "Input file: ");
     countWords(infile, wordCounts);
     infile.close();
@@ -36,9 +38,9 @@ int main()
  * ---------------------------------------
  * Counts words in input stream, store result in wordCounts
  */
-void countWords(istream &stream, Map<string, int> &wordCounts)
+void countWords(istream &stream, map<string, int> &wordCounts)
 {
-    Vector<string> lines, words;
+    vector<string> lines, words;
     readEntireFile(stream, lines);
     for (string line : lines)
     {
@@ -55,10 +57,10 @@ void countWords(istream &stream, Map<string, int> &wordCounts)
  * Display the count associated with each word in the wordCount map
  */
 
-void displayWordCounts(Map<string, int> &wordCounts)
+void displayWordCounts(map<string, int> &wordCounts)
 {
-    for (string word : wordCounts)
-        cout << left << setw(15) << word << right << setw(5) << wordCounts[word] << endl;
+    for (map<string, int>::iterator word = wordCounts.begin(); word != wordCounts.end(); ++word)
+        cout << left << setw(15) << word->first << right << setw(5) << word->second << endl;
 }
 
 /*
@@ -68,7 +70,7 @@ void displayWordCounts(Map<string, int> &wordCounts)
  * Extract words from the line into the string vector words
  */
 
-void extractWords(string line, Vector<string> &words)
+void extractWords(string line, vector<string> &words)
 {
     words.clear();
     int start = -1;
@@ -83,11 +85,11 @@ void extractWords(string line, Vector<string> &words)
         {
             if (start >= 0)
             {
-                words.add(line.substr(start, i - start));
+                words.push_back(line.substr(start, i - start));
                 start = -1;
             }
         }
     }
     if (start >= 0)
-        words.add(line.substr(start));
+        words.push_back(line.substr(start));
 }

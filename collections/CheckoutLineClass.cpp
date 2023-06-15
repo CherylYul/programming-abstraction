@@ -18,14 +18,15 @@
 
 #include <iostream>
 #include <iomanip>
-#include "queue.h"
-#include "random.h"
+#include <queue>
+#include "../random/random.h"
+#include "../random/random.cpp"
 using namespace std;
 
 const double ARRIVAL_PROBABILITY = 0.05; /* probability that customers will arrive during a single unit of time */
 const int MIN_SERVICE_TIME = 5;
 const int MAX_SERVICE_TIME = 15;
-const int SIMULATION_TIME = 2000; /* duration of simulation*/
+const int SIMULATION_TIME = 2000;
 
 class CheckoutLineSimulation
 {
@@ -40,7 +41,7 @@ public:
      */
     void runSimulation(int &nServed, int &totalWait, int &totalLength)
     {
-        Queue<int> queue;
+        queue<int> customerQueue;
         int timeRemaining = 0;
         nServed = 0;
         totalWait = 0;
@@ -48,16 +49,17 @@ public:
         for (int t = 0; t < SIMULATION_TIME; t++)
         {
             if (randomChance(ARRIVAL_PROBABILITY))
-                queue.enqueue(t);
+                customerQueue.push(t);
             if (timeRemaining > 0)
                 timeRemaining--;
-            else if (!queue.isEmpty())
+            else if (!customerQueue.empty())
             {
-                totalWait += t - queue.dequeue();
+                totalWait = totalWait + t - customerQueue.front();
+                customerQueue.pop();
                 nServed++;
                 timeRemaining = randomInteger(MIN_SERVICE_TIME, MAX_SERVICE_TIME);
             }
-            totalLength += queue.size();
+            totalLength += customerQueue.size();
         }
     }
 
@@ -77,7 +79,9 @@ public:
         cout << "MAX_SERVICE_TIME: " << setw(7) << MAX_SERVICE_TIME << endl;
         cout << endl;
         cout << "Customers served: " << setw(7) << nServed << endl;
+        cout << "Total waiting time: " << setw(7) << totalWait << endl;
         cout << "Average waiting time: " << setw(7) << double(totalWait) / nServed << endl;
+        cout << "Total queue length: " << setw(7) << totalLength << endl;
         cout << "Average queue length: " << setw(7) << double(totalLength) / nServed << endl;
     }
 
@@ -90,7 +94,10 @@ private:
 int main()
 {
     CheckoutLineSimulation simulation;
-    simulation.runSimulation();
-    simulation.printReport();
+    int nServed;
+    int totalWait;
+    int totalLength;
+    simulation.runSimulation(nServed, totalWait, totalLength);
+    simulation.printReport(nServed, totalWait, totalLength);
     return 0;
 }

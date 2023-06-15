@@ -10,6 +10,8 @@
 #include <map>
 #include "../string/mstring.h"
 #include "../string/mstring.cpp"
+#include "../error/error.h"
+#include "../error/error.cpp"
 using namespace std;
 
 void readCodeFile(string filename, map<string, string> &map);

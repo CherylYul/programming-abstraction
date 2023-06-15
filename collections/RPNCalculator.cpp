@@ -10,20 +10,18 @@
 #include <iostream>
 #include <cctype>
 #include <string>
-#include "string/strlib.h"
-#include "string/strlib.cpp"
-#include "error/error.h"
-#include "error/error.cpp"
-#include <stack.h>
+#include <stack>
+#include "../string/strlib.h"
+#include "../string/strlib.cpp"
 using namespace std;
 
-void applyOperator(char op, Stack<double> &operandStack);
+void applyOperator(char op, stack<double> &operandStack);
 void helpCommand();
 
 int main()
 {
     cout << "RPN Calculator Simulation (type H for help)" << endl;
-    Stack<double> operandStack;
+    stack<double> operandStack;
     while (true)
     {
         string line;
@@ -35,11 +33,13 @@ int main()
         if (ch == 'Q')
             break;
         else if (ch == 'C')
-            operandStack.clear();
+            operandStack = stack<double>();
         else if (ch == 'H')
             helpCommand();
         else if (isdigit(ch))
+        {
             operandStack.push(stringToDouble(line));
+        }
         else
             applyOperator(ch, operandStack);
     }
@@ -55,23 +55,30 @@ int main()
  * the right operand is popped before the left operand.
  */
 
-void applyOperator(char op, Stack<double> &operandStack)
+void applyOperator(char op, stack<double> &operandStack)
 {
     double result;
-    double rhs = operandStack.pop();
-    double lhs = operandStack.pop();
+    double rhs = operandStack.top();
+    operandStack.pop();
+    double lhs = operandStack.top();
+    operandStack.pop();
     switch (op)
     {
     case '+':
         result = lhs + rhs;
+        break;
     case '-':
         result = lhs - rhs;
+        break;
     case '*':
         result = lhs * rhs;
+        break;
     case '/':
         result = lhs / rhs;
+        break;
     default:
         error("Illegal Operator");
+        break;
     }
     cout << result << endl;
     operandStack.push(result);

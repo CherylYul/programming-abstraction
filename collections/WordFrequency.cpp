@@ -1,7 +1,7 @@
 /*
  * File: WordFrequency.cpp
  * ---------------------------------------
- * Computes the frequency of words in a text file
+ * Computes the frequency of words and letters in a text file
  */
 
 #include <iostream>
@@ -17,18 +17,22 @@
 #include "../string/mstring.cpp"
 using namespace std;
 
+static const int COLUMNS = 7;
+
 void countWords(istream &stream, map<string, int> &wordCounts);
+void countLetters();
 void displayWordCounts(map<string, int> &wordCounts);
 void extractWords(string line, vector<string> &word);
 
 int main()
 {
-    ifstream infile;
     map<string, int> wordCounts;
+    ifstream infile;
     promptUserForFile(infile, "Input file: ");
     countWords(infile, wordCounts);
     infile.close();
     displayWordCounts(wordCounts);
+    countLetters();
     return 0;
 }
 
@@ -51,10 +55,31 @@ void countWords(istream &stream, map<string, int> &wordCounts)
 }
 
 /*
+ * Function: countLetters
+ * Usage: countLetters();
+ * ---------------------------------------
+ * Counts the frequency of letters in a data file
+ */
+
+void countLetters()
+{
+    vector<int> letterCounts(26);
+    ifstream infile;
+    promptUserForFile(infile, "Input File: ");
+    char ch;
+    while (infile.get(ch))
+        if (isalpha(ch))
+            letterCounts[toupper(ch) - 'A']++;
+    infile.close();
+    for (char ch = 'A'; ch <= 'Z'; ch++)
+        cout << setw(7) << letterCounts[ch - 'A'] << " " << ch << endl;
+}
+
+/*
  * Function: displayWordCounts
  * Usage: displayWordCounts(wordCount);
  * ---------------------------------------
- * Display the count associated with each word in the wordCount map
+ * Display the count associated with each word and letter
  */
 
 void displayWordCounts(map<string, int> &wordCounts)

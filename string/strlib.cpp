@@ -54,7 +54,6 @@ int stringToInteger(string str)
     stream >> value >> ws;
     if (stream.fail() || !stream.eof())
         error("stringToInteger: Illegal integer format");
-    cout << "stringToInteger: Illegal integer format" << endl;
     return value;
 }
 
@@ -63,9 +62,8 @@ double stringToDouble(string str)
     double value;
     istringstream stream(str);
     stream >> value >> ws;
-    if (stream.fail() || !stream.eof())
-        error("stringToInteger: Illegal integer format");
-    cout << "stringToInteger: Illegal integer format" << endl;
+    // if (stream.fail() || !stream.eof())
+    //     error("stringToDouble: Illegal integer format");
     return value;
 }
 

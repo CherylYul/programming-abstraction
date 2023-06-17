@@ -51,6 +51,4 @@ std::string createRegularPlural(std::string word);
 std::string createOrdinalForm(int n);
 std::string addCommas(int digits);
 
-void error(std::string msg);
-
 #endif

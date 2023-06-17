@@ -330,7 +330,7 @@ string trimStart(string str)
 string substrOne(string str, int pos, char n)
 {
     if (pos > str.length())
-        error("position should smaller than the length of the string!");
+        cout << "position should smaller than the length of the string!" << endl;
 
     int end = 0;
     for (int i = str.length() - 1; i > pos; i--)
@@ -542,10 +542,4 @@ string addCommas(int digits)
     for (int i = str.length() - 3; i > 0; i = i - 3)
         str.insert(i, ",");
     return str;
-}
-
-void error(string msg)
-{
-    cerr << msg << endl;
-    exit(EXIT_FAILURE);
 }

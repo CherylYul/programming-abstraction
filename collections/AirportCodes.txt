@@ -1,5 +1,0 @@
-JFK=New York, NY, USA
-ORD=Chicago, IL, USA
-SIN=Singapore, Singapore
-LAX=Los Angeles, NV, USA
-SGN=Ho Chi Minh, Vietnam

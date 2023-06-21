@@ -1,0 +1,51 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int linearSearch(int key, vector<int> &vec);
+int binarySearch(int key, vector<int> &vec);
+
+/*
+ * Function: linearSearch
+ * Usage: int pos = linearSearch(key, vec);
+ * ---------------------------------------
+ * Linear search goes through each element and finds the matching value
+ * with the key and return its position, if not found return -1
+ * ! Carefully, it may need more than half a day to run with 100000 inputs
+ */
+
+int linearSearch(int key, vector<int> &vec)
+{
+    int vecSize = vec.size();
+    for (int i = 0; i < vecSize; i++)
+        if (vec[i] == key)
+            return i;
+    return -1;
+}
+
+/*
+ * Function: binarySearch
+ * Usage: int pos = binarySearch(key, vec);
+ * ---------------------------------------
+ * Binary search takes the advantage of sorted list and finds the matching
+ * value by comparing the middle value, then eliminate the half size until
+ * find out the exact key, if key not found return -1
+ */
+
+int binarySearch(int key, vector<int> &vec)
+{
+    int lh = 0;
+    int rh = vec.size() - 1;
+    int mid = vec.size() / 2;
+    while (lh <= rh)
+    {
+        int mid = (lh + rh) / 2;
+        if (vec[mid] == key)
+            return mid;
+        if (key < vec[mid])
+            rh = mid - 1;
+        else
+            lh = mid + 1;
+    }
+    return -1;
+}

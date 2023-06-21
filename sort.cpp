@@ -1,25 +1,10 @@
 #include <iostream>
 #include <vector>
+#include <cmath>
+#include "sort.h"
 #include "library/collection/vector.h"
 #include "library/collection/vector.cpp"
 using namespace std;
-
-void insertionSort(vector<int> &vec);
-void selectionSort(vector<int> &vec);
-void swap(int &valueOne, int &valueTwo);
-void mergeSort(vector<int> &vec);
-void merge(vector<int> &vec, vector<int> &v1, vector<int> &v2);
-void quickSort(vector<int> &vec);
-void quickSort(vector<int> &vec, int start, int finish);
-int partition(vector<int> &vec, int start, int finish);
-
-int main()
-{
-    vector<int> vec = {56, 25, 37, 58, 95, 19, 73, 30};
-    quickSort(vec);
-    cout << vec << endl;
-    return 0;
-}
 
 /*
  * Function: insertionSort
@@ -177,4 +162,67 @@ int partition(vector<int> &vec, int start, int finish)
     vec[start] = vec[lhp];
     vec[lhp] = pivot;
     return lhp;
+}
+
+/*
+ * Function: countingSort
+ * ---------------------------------------
+ * This sort takes the advantage of knowing the integer range value,
+ * ususally from 0 - 9, if larger we will corporate with radix sort,
+ * so it can run in linear time.
+ */
+
+void countingSort(vector<int> &vec)
+{
+    if (vec.size() <= 1)
+        return;
+    vector<int> vecResult(vec.size());
+    vector<int> countVal(10);
+    for (int i : vec)
+        countVal[i]++;
+    for (int i = 1; i < 10; i++)
+        countVal[i] += countVal[i - 1];
+    for (int i : vec)
+    {
+        vecResult[countVal[i] - 1] = i;
+        countVal[i]--;
+    }
+    vec = vecResult;
+}
+
+/*
+ * Function: radixSort
+ * ---------------------------------------
+ * Radix sort is a linear sort that sorts elements by processing them
+ * digit by digit, it wiil combine with counting sort on digit which can
+ * sort with O(d(n+k)) times.
+ */
+
+void radixSort(vector<int> &vec, int digit)
+{
+    for (int d = 1; d < digit + 1; d++)
+        countingSortOnDigit(vec, d);
+}
+
+void countingSortOnDigit(vector<int> &vec, int digit)
+{
+    if (vec.size() <= 1)
+        return;
+    int div = pow(10, digit - 1);
+    vector<int> vecResult(vec.size());
+    vector<int> countVal(10);
+    for (int i : vec)
+    {
+        int d = (i / div) % 10;
+        countVal[d]++;
+    }
+    for (int i = 1; i < countVal.size(); i++)
+        countVal[i] += countVal[i - 1];
+    for (int i = vec.size() - 1; i >= 0; i--)
+    {
+        int d = (vec[i] / div) % 10;
+        vecResult[countVal[d] - 1] = vec[i];
+        countVal[d]--;
+    }
+    vec = vecResult;
 }

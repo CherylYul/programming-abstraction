@@ -4,6 +4,7 @@ using namespace std;
 
 int linearSearch(int key, vector<int> &vec);
 int binarySearch(int key, vector<int> &vec);
+int binarySearch(int key, vector<int> &vec, int lhp, int rhp);
 
 /*
  * Function: linearSearch
@@ -26,6 +27,7 @@ int linearSearch(int key, vector<int> &vec)
 /*
  * Function: binarySearch
  * Usage: int pos = binarySearch(key, vec);
+ *        int pos = binarySearch(key, vec, lhp, rhp);
  * ---------------------------------------
  * Binary search takes the advantage of sorted list and finds the matching
  * value by comparing the middle value, then eliminate the half size until
@@ -48,4 +50,17 @@ int binarySearch(int key, vector<int> &vec)
             lh = mid + 1;
     }
     return -1;
+}
+
+int binarySearch(int key, vector<int> &vec, int lhp, int rhp)
+{
+    if (lhp > rhp)
+        return -1;
+    int mid = (lhp + rhp) / 2;
+    if (key == vec[mid])
+        return mid;
+    if (key < vec[mid])
+        return binarySearch(key, vec, lhp, mid - 1);
+    else
+        return binarySearch(key, vec, mid + 1, rhp);
 }

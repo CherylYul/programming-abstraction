@@ -9,6 +9,10 @@
 #define _statistic_h
 #include <string>
 
+int fact(int n);
+int combinations(int n, int k);
+int permutations(int n, int k);
+
 double mean(std::vector<double> &data);
 double var(std::vector<double> &data);
 double stddev(std::vector<double> &data);

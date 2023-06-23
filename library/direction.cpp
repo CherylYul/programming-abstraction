@@ -9,12 +9,12 @@
 using namespace std;
 
 /*
- * Implmentation notes: leftFrom, rightFrom
+ * Function: leftFrom, rightFrom
+ * Usage: Direction newdir = leftFrom(dir);
+ *        Direction newdir = rightFrom(dir);
  * ------------------------------------------------------
- * These functions use the remainder operator to cycle through
- * the internal values of the enumerated type. leftFrom function
- * cannot subtract 1 which leads to negative, instead adding 3
- * would be better as it ensures values remain positive
+ * Returns the direction to the left or right of the argument
+ * Ex: leftFrom(SOUTH) will return EAST
  */
 
 Direction leftFrom(Direction dir)
@@ -28,7 +28,8 @@ Direction rightFrom(Direction dir)
 }
 
 /*
- * Implmentation notes: directionToString
+ * Function: directionToString
+ * Usage: string str = directionToString(dir);
  * ------------------------------------------------------
  * Default clause to make function return a string
  */

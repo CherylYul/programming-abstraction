@@ -6,87 +6,107 @@
 
 #include <iostream>
 #include <cmath>
+#include <vector>
 #include <cstdlib>
 #include "mmath.h"
 #include "../error/error.h"
 #include "../error/error.cpp"
 using namespace std;
 
-/*
- * Function: addNInput
- * Usage: double result = addNInput(int n);
+/* Function: reverseN
+ * Usage: int num = reverseN(int n);
  * -----------------------------------------------
- * Return total value users input into the program
+ * Returns the reverseN number of n
  */
 
-double addNInput(int n)
+int reverseN(int n)
 {
-    double result = 0;
-    for (int i = 0; i < n; i++)
+    int div = 1;
+    vector<int> digits;
+    while (n > div)
     {
-        double value;
-        cout << "The " << i + 1 << " value is: ";
-        cin >> value;
-        result += value;
+        digits.push_back((n / div) % 10);
+        div *= 10;
     }
-    return result;
+    int reverseNum = 0;
+    for (int i : digits)
+    {
+        div /= 10;
+        reverseNum = reverseNum + (i * div);
+    }
+    return reverseNum;
 }
 
 /*
- * Function: addToN
- * Usage: int total = addToN(int n);
+ * Function: squareN
+ * Usage: int result = squareN(int num);
  * -----------------------------------------------
- * Return total value the program from 1 to n
+ * Returns the squareN of x
  */
 
-int addToN(int n)
-{
-    int total = 0;
-    for (int i = 0; i <= n; i++)
-    {
-        total += i;
-    }
-    return total;
-}
+int squareN(int x) { return x * x; }
 
-/* Function: reverseNum
- * Usage: int num = reverseNum(int n);
+/*
+ * File: sqrtN
+ * Usage: double result = sqrtN(double n);
  * -----------------------------------------------
- * Returns the reverse number of n
+ * Implements sqrt function without using the library version
+ * by using successive approximation
  */
 
-int reverseNum(int n)
+double sqrtN(double n)
 {
-    int result = 0;
-    while (n >= 1)
+    double g = roundToDecimals(n / 2, 2);
+    double dividedResult = roundToDecimals(n / g, 2);
+    while (g != dividedResult)
     {
-        result = (result * 10) + (n % 10);
-        n /= 10;
+        g = roundToDecimals((g + dividedResult) / 2, 2);
+        dividedResult = roundToDecimals(n / g, 2);
     }
-    return result;
+    return g;
 }
 
 /*
- * Function: factorial
- * Usage: int result = fact(int n)
+ * Function: powerN
+ * Usage: int p = powerN(int n, int k);
  * -----------------------------------------------
- * Returns the factorial of n, which is the product of all
- * the integers between 1 and n, inclusive
+ * Returns the integer n raised to the kth power
  */
 
-int factorial(int n)
+int powerN(int n, int k)
 {
+    // if (k == 1)
+    //     return n;
+    // int mid = k / 2;
+    // return powerN(n, mid) * powerN(n, k - mid);
+
     int result = 1;
-    for (int i = n; i > 1; i--)
-    {
-        result *= i;
-    }
+    for (int i = 0; i < k; i++)
+        result *= n;
     return result;
 }
+
+/*
+ * File: roundN
+ * Usage: int result = roundN(n);
+ * -----------------------------------------------
+ * Returns n to the nearest integer
+ */
+
+int roundN(double n) { return int(n + 0.5); }
+
+/*
+ * File: roundToDecimals
+ * Usage: double result = roundToDecimals(n, d);
+ * -----------------------------------------------
+ * Returns n to the floating number that has d decimals
+ */
+
+double roundToDecimals(double n, int d) { return roundN(n * powerN(10, d)) / powerN(10, d); }
 
 /*
  * Function: gcd
- * Usage: int result = gcd(int x, int y)
+ * Usage: int result = gcd(x, y)
  * -----------------------------------------------
  * Uses Euclid's algorithm to calculate the greatest common divisor.
  * Ex: the gcd of 35 and 49 is 7. GCD includes 3 steps:
@@ -111,116 +131,33 @@ int gcd(int x, int y)
 }
 
 /*
- * Function: combinations(n,k)
- * Usage: int nWays = combinations(int n, int k)
+ * Function: isEven, isOdd
+ * Usage: isEven(n); isOdd(n);
  * -----------------------------------------------
- * Returns the mathematical combinations function C(n,k),
- * which is the number of ways one can choose k elements
- * from a set of size n
+ * isEven returns true if n is even else returns false, isOdd vice versa.
+ * A number is even when either it is 0 or its predecessor is odd.
  */
 
-int combinations(int n, int k)
+bool isEven(unsigned int n)
 {
-    return factorial(n) / (factorial(k) * factorial(n - k));
+    if (n == 0)
+        return true;
+    return isOdd(n - 1);
+    // return n % 2 == 0;
 }
 
-/*
- * Function: permutations(n,k)
- * Usage: int nWays = permutations(int n, int k)
- * -----------------------------------------------
- * Returns number of ways a particular set can be arranged
- */
-
-int permutations(int n, int k)
+bool isOdd(unsigned int n)
 {
-    int result = 1;
-    for (int i = n; k > 0; i--)
-    {
-        result *= i;
-        k -= 1;
-    }
-    return result;
-}
-
-/*
- * Function: square(n)
- * Usage: int result = square(int num);
- * -----------------------------------------------
- * Returns the square of x
- */
-
-int square(int x)
-{
-    return x * x;
-}
-
-/*
- * Function: power
- * Usage: int p = power(int n, int k);
- * -----------------------------------------------
- * Returns the integer n raised to the kth power
- */
-
-int power(int n, int k)
-{
-    int result = 1;
-    for (int i = 0; i < k; i++)
-    {
-        result *= n;
-    }
-    return result;
-}
-
-/*
- * File: roundToNearestInt
- * Usage: int result = roundToNearestInt(n);
- * -----------------------------------------------
- * Returns n to the nearest integer
- */
-
-int roundToNearestInt(double n)
-{
-    return int(n + 0.5);
-}
-
-/*
- * File: roundTo2
- * Usage: double result = roundTo2(double n);
- * -----------------------------------------------
- * Returns n to the floating number that only has 2 decimals
- */
-
-double roundTo2(double n)
-{
-    return ceil(n * 100) / 100;
-}
-
-/*
- * File: sqrt
- * Usage: double result = sqrt(double n);
- * -----------------------------------------------
- * Implements sqrt function without using the library version
- * by using successive approximation
- */
-
-double sqrt(double n)
-{
-    double g = roundTo2(n / 2);
-    double dividedResult = roundTo2(n / g);
-    while (g != dividedResult)
-    {
-        g = roundTo2((g + dividedResult) / 2);
-        dividedResult = roundTo2(n / g);
-    }
-    return g;
+    return !isEven(n);
+    // return n % 2 == 1;
 }
 
 /*
  * Function: isPerfect
- * Usage: isPerfect(int n);
+ * Usage: isPerfect(n);
  * -----------------------------------------------
- * Return true if n is a perfect number. Perfect number is the one
- * that equals to the sum of their proper divisors, ex: 6 and 28
+ * Return true if n is a perfect number. Perfect number is the one that
+ * equals to the sum of their proper divisors, ex: 6 and 28
  */
 
 bool isPerfect(int n)
@@ -228,28 +165,14 @@ bool isPerfect(int n)
     int squareRoot = int(sqrt(n)) + 1;
     int result = 1;
     for (int i = 2; i < squareRoot; i++)
-    {
         if (n % i == 0)
             result = result + n / i + i;
-    }
     return result == n;
 }
 
 /*
- * Function: isEven
- * Usage: isEven(int n);
- * -----------------------------------------------
- * Returns true if n is even, if odd returns false
- */
-
-bool isEven(int n)
-{
-    return n % 2 == 0;
-}
-
-/*
  * Function: isPrime
- * Usage: isPrime(int n);
+ * Usage: isPrime(n);
  * -----------------------------------------------
  * Returns true if n is prime, if not returns false
  */
@@ -259,21 +182,17 @@ bool isPrime(int n)
     int squareRoot = int(sqrt(n)) + 1;
     bool count = true;
     for (int i = 2; i < squareRoot; i++)
-    {
         if (n % i == 0)
         {
             count = !count;
             break;
         }
-    }
     return count;
 }
 
 /*
  * Function: primeFactorization
- * Usage: primeFactorization(int n);
- * -----------------------------------------------
- * Factors the n
+ * Usage: primeFactorization(n);
  */
 
 void primeFactorization(int n)
@@ -289,9 +208,7 @@ void primeFactorization(int n)
                 cout << " x ";
         }
         else
-        {
             start += 1;
-        }
     }
 }
 

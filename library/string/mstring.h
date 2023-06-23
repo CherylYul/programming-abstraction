@@ -26,7 +26,8 @@ void toLowerCaseInPlace(std::string &str);
 std::string toUpperCase(std::string str);
 std::string toLowerCase(std::string str);
 
-bool isWordPalindrome(std::string str);
+bool isPalindrome(std::string str);
+bool isSubstrPalindrome(std::string str, int lsp, int rsp);
 bool isSentencePalindrome(std::string str);
 
 std::string secondHalf(std::string str);
@@ -51,5 +52,8 @@ std::string replaceAll(std::string str, std::string s1, std::string s2);
 std::string createRegularPlural(std::string word);
 std::string createOrdinalForm(int n);
 std::string addCommas(int digits);
+
+int strlen(char str[]);
+int strlen(char *cp);
 
 #endif

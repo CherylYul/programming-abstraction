@@ -196,16 +196,35 @@ string toLowerCase(string str)
 }
 
 /*
- * Function: isWordPalindrome
- * Usage: isWordPalindrome(str);
+ * Function: isPalindrome
+ * Usage: isPalindrome(str);
  * -----------------------------------------------
- * Returns true if a string is a palindrome. A palindrome is a word that
- * reads identically backward and forward
+ * Returns true if a string is a palindrome, which is a string that reads the
+ * same backward and forward.
  */
 
-bool isWordPalindrome(string str)
+bool isPalindrome(string str)
 {
-    return str == reverse(str);
+    /*
+     * Method 1: take advantage of reverse function:
+     *      return str == reverse(str);
+     *
+     * Method 2: take advantage of recursion
+     *      int len = str.length();
+     *      if (len <= 1) return true;
+     *      return str[0] == str[len - 1] && isPalindrome(str.substr(1, len - 2));
+     *
+     * Method 3: take advantage of recursion's arguments, adding left size position
+     * (lsp) and right side position (rsp) to keep track indices of str
+     */
+    return isSubstrPalindrome(str, 0, str.length() - 1);
+}
+
+bool isSubstrPalindrome(string str, int lsp, int rsp)
+{
+    if (lsp >= rsp)
+        return true;
+    return str[lsp] == str[rsp] && isSubstrPalindrome(str, lsp + 1, rsp - 1);
 }
 
 /*
@@ -542,4 +561,28 @@ string addCommas(int digits)
     for (int i = str.length() - 3; i > 0; i = i - 3)
         str.insert(i, ",");
     return str;
+}
+
+int strlen(char str[])
+{
+    int n = 0;
+    while (str[n] != '\0')
+        n++;
+    return n;
+}
+
+int strlen(char *cp)
+{
+    int n = 0;
+    while (*cp != '\0')
+        n++;
+    return n;
+}
+
+int strlen(char *str)
+{
+    char *cp;
+    for (cp = str; *cp != '\0'; cp++)
+        ;
+    return cp - str;
 }

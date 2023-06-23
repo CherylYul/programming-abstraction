@@ -13,6 +13,59 @@
 #include "statistic.h"
 using namespace std;
 
+/*
+ * Function: fact
+ * Usage: int result = fact(int n)
+ * -----------------------------------------------
+ * Calculate factorial - the product of all integers between 1 and n
+ */
+
+// int fact(int n)
+// {
+//     int result = 1;
+//     for (int i = n; i > 1; i--)
+//         result *= i;
+//     return result;
+// }
+
+int fact(int n)
+{
+    if (n == 0)
+        return 1;
+    return n * fact(n - 1);
+}
+
+/*
+ * Function: combinations(n,k)
+ * Usage: int nWays = combinations(int n, int k)
+ * -----------------------------------------------
+ * Returns the mathematical combinations function C(n,k), which is the number
+ * of ways one can choose k elements from a set of size n
+ */
+
+int combinations(int n, int k)
+{
+    return fact(n) / (fact(k) * fact(n - k));
+}
+
+/*
+ * Function: permutations(n,k)
+ * Usage: int nWays = permutations(int n, int k)
+ * -----------------------------------------------
+ * Returns number of ways a particular set can be arranged
+ */
+
+int permutations(int n, int k)
+{
+    int result = 1;
+    for (int i = n; k > 0; i--)
+    {
+        result *= i;
+        k -= 1;
+    }
+    return result;
+}
+
 double mean(vector<double> &data)
 {
     double sum = 0;

@@ -15,29 +15,26 @@ using namespace std;
 
 /*
  * Function: fact
- * Usage: int result = fact(int n)
+ * Usage: int result = fact(n)
  * -----------------------------------------------
  * Calculate factorial - the product of all integers between 1 and n
  */
 
-// int fact(int n)
-// {
-//     int result = 1;
-//     for (int i = n; i > 1; i--)
-//         result *= i;
-//     return result;
-// }
-
 int fact(int n)
 {
+    // int result = 1;
+    // for (int i = n; i > 1; i--)
+    //      result *= i;
+    // return result;
+
     if (n == 0)
         return 1;
     return n * fact(n - 1);
 }
 
 /*
- * Function: combinations(n,k)
- * Usage: int nWays = combinations(int n, int k)
+ * Function: combinations
+ * Usage: int nWays = combinations(n, k)
  * -----------------------------------------------
  * Returns the mathematical combinations function C(n,k), which is the number
  * of ways one can choose k elements from a set of size n
@@ -49,8 +46,8 @@ int combinations(int n, int k)
 }
 
 /*
- * Function: permutations(n,k)
- * Usage: int nWays = permutations(int n, int k)
+ * Function: permutations
+ * Usage: int nWays = permutations(n, k)
  * -----------------------------------------------
  * Returns number of ways a particular set can be arranged
  */
@@ -64,6 +61,28 @@ int permutations(int n, int k)
         k -= 1;
     }
     return result;
+}
+
+/*
+ * Function: permute
+ * Usage: permute("", "abcd");
+ * -----------------------------------------------
+ * Solving anagram problems, ex, permute the result of word "abcd" will
+ * return 24 different results
+ */
+
+void permute(string soFar, string rest)
+{
+    if (rest == "")
+    {
+        cout << soFar << endl;
+        return;
+    }
+    for (int i = 0; i < rest.length(); i++)
+    {
+        string remaining = rest.substr(0, i) + rest.substr(i + 1);
+        permute(soFar + rest[i], remaining);
+    }
 }
 
 double mean(vector<double> &data)

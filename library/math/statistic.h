@@ -11,9 +11,11 @@
 
 int fact(int n);
 int combinations(int n, int k);
+int internalComb(int n, int k);
 int permutations(int n, int k);
 void permute(std::string soFar, std::string rest);
 
+double sum(std::vector<double> &data);
 double mean(std::vector<double> &data);
 double var(std::vector<double> &data);
 double stddev(std::vector<double> &data);

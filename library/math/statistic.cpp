@@ -16,7 +16,7 @@ using namespace std;
 /*
  * Function: fact
  * Usage: int result = fact(n)
- * -----------------------------------------------
+ * ---------------------------------------
  * Calculate factorial - the product of all integers between 1 and n
  */
 
@@ -35,20 +35,42 @@ int fact(int n)
 /*
  * Function: combinations
  * Usage: int nWays = combinations(n, k)
- * -----------------------------------------------
+ * ---------------------------------------
  * Returns the mathematical combinations function C(n,k), which is the number
  * of ways one can choose k elements from a set of size n
+ * 1. Take the advantage of factorial function to calculate
+ * 2. Use Pascal's Triangle:
+ *                     c(0, 0)                                 1
+ *                 c(1, 0)  c(1, 1)                          1   1
+ *             c(2, 0)  c(2, 1)  c(2, 2)                   1   2   1
+ *         c(3, 0)  c(3, 1)  c(3, 2)  c(3, 3)            1   3   3   1
+ *     c(4, 0)  c(4, 1)  c(4, 2)  c(4, 3)  c(4, 4)     1   4   6   4   1
+ * Caculate the results based on value along the diagonal:
+ *      c(n, k) = c(n - 1, k - 1) x n/k
+ *      c(n, 0) = 1
  */
 
 int combinations(int n, int k)
 {
-    return fact(n) / (fact(k) * fact(n - k));
+    // return fact(n) / (fact(k) * fact(n - k));
+    int mid = n / 2;
+    if (k > mid)
+        return internalComb(n, n - k);
+    else
+        return internalComb(n, k);
+}
+
+int internalComb(int n, int k)
+{
+    if (k < 1)
+        return 1;
+    return double(n) / double(k) * internalComb(n - 1, k - 1);
 }
 
 /*
  * Function: permutations
  * Usage: int nWays = permutations(n, k)
- * -----------------------------------------------
+ * ---------------------------------------
  * Returns number of ways a particular set can be arranged
  */
 
@@ -66,7 +88,7 @@ int permutations(int n, int k)
 /*
  * Function: permute
  * Usage: permute("", "abcd");
- * -----------------------------------------------
+ * ---------------------------------------
  * Solving anagram problems, ex, permute the result of word "abcd" will
  * return 24 different results
  */
@@ -85,13 +107,15 @@ void permute(string soFar, string rest)
     }
 }
 
-double mean(vector<double> &data)
+double sum(vector<double> &data)
 {
     double sum = 0;
     for (vector<double>::iterator i = data.begin(); i != data.end(); ++i)
         sum += *i;
-    return sum / data.size();
+    return sum;
 }
+
+double mean(vector<double> &data) { return sum(data) / data.size(); }
 
 double var(vector<double> &data)
 {
@@ -102,10 +126,7 @@ double var(vector<double> &data)
     return sum / data.size();
 }
 
-double stddev(vector<double> &data)
-{
-    return sqrt(var(data));
-}
+double stddev(vector<double> &data) { return sqrt(var(data)); }
 
 void histogram(vector<double> &data, int divisor)
 {

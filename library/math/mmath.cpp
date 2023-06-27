@@ -7,6 +7,7 @@
 #include <iostream>
 #include <cmath>
 #include <vector>
+#include <map>
 #include <cstdlib>
 #include "mmath.h"
 #include "../error/error.h"
@@ -47,7 +48,7 @@ int reverseN(int n)
 int squareN(int x) { return x * x; }
 
 /*
- * File: sqrtN
+ * Function: sqrtN
  * Usage: double result = sqrtN(double n);
  * -----------------------------------------------
  * Implements sqrt function without using the library version
@@ -80,14 +81,18 @@ int powerN(int n, int k)
     // int mid = k / 2;
     // return powerN(n, mid) * powerN(n, k - mid);
 
-    int result = 1;
-    for (int i = 0; i < k; i++)
-        result *= n;
-    return result;
+    // int result = 1;
+    // for (int i = 0; i < k; i++)
+    //     result *= n;
+    // return result;
+
+    if (k == 0)
+        return 1;
+    return n * powerN(n, k - 1);
 }
 
 /*
- * File: roundN
+ * Function: roundN
  * Usage: int result = roundN(n);
  * -----------------------------------------------
  * Returns n to the nearest integer
@@ -96,7 +101,7 @@ int powerN(int n, int k)
 int roundN(double n) { return int(n + 0.5); }
 
 /*
- * File: roundToDecimals
+ * Function: roundToDecimals
  * Usage: double result = roundToDecimals(n, d);
  * -----------------------------------------------
  * Returns n to the floating number that has d decimals
@@ -120,14 +125,50 @@ int gcd(int x, int y)
 {
     if (y == 0 || x == 0)
         error("The 2 integers must be greater than 0!");
-    int r = x % y;
-    while (r != 0)
-    {
-        x = y;
-        y = r;
-        r = x % y;
-    }
-    return y;
+    // int r = x % y;
+    // while (r != 0)
+    // {
+    //     x = y;
+    //     y = r;
+    //     r = x % y;
+    // }
+    // return y;
+    if (x < y)
+        swap(x, y);
+    if (x % y == 0)
+        return y;
+    return gcd(y, x % y);
+}
+
+/*
+ * Function: digitSum
+ * Usage: int result = digitSum(n);
+ * -----------------------------------------------
+ * Sum the digit of values, ex: 1729 = 1+7+2+9 = 19
+ */
+
+int digitSum(int n) { return internalDigitSum(n, 1); }
+int internalDigitSum(int n, int div)
+{
+    if (n < div)
+        return 0;
+    return (n / div) % 10 + internalDigitSum(n, div * 10);
+}
+
+/*
+ * Function: digitalRoot
+ * Usage: int result = digitalRoot(n);
+ * -----------------------------------------------
+ * Digital root is the result of summing the digits repeatedly until
+ * only a single digit remains
+ * Ex: 1729 = 1 + 7 + 2 + 9 = 19 = 1 + 9 = 10 = 1 + 0 = 1
+ */
+
+int digitalRoot(int n)
+{
+    if (n < 10)
+        return n;
+    return digitalRoot(digitSum(n));
 }
 
 /*
@@ -213,6 +254,32 @@ void primeFactorization(int n)
 }
 
 /*
+ * Function: sievePrime
+ * Usage: sievePrime(n);
+ * -----------------------------------------------
+ * Sieve of Eratosthenes is the algorithm that finds out the prime number
+ * by circle the first number in range from 2 to N, then cross off every
+ * multiple of 2, continue to circle next element which wasn't been crossed
+ * and repeat the process
+ */
+
+void sievePrime(int n)
+{
+    map<int, bool> numList;
+    numList[0] = false;
+    numList[1] = false;
+    for (int i = 2; i < n; i++)
+        numList[i] = true;
+    for (int p = 2; p <= sqrt(n); p++)
+        if (numList[p])
+            for (int i = p * p; i <= n; i += p)
+                numList[i] = false;
+    for (int i = 2; i < n; i++)
+        if (numList[i])
+            cout << i << endl;
+}
+
+/*
  * Function: solveQuadratic
  * Usage: solveQuadratic(a, b, c, x1, x2);
  * ------------------------------------------------------
@@ -230,4 +297,11 @@ void solveQuadratic(double a, double b, double c, double &x1, double &x2)
     double sqrtDisc = sqrt(disc);
     x1 = (-b + sqrtDisc) / (2 * a);
     x2 = (-b - sqrtDisc) / (2 * a);
+}
+
+void swap(int &x, int &y)
+{
+    int temp = x;
+    x = y;
+    y = temp;
 }

@@ -137,3 +137,50 @@ void rectangleCircle(int r)
     }
     cout << "The area of the quarter circle is " << area << endl;
 }
+
+/*
+ * Function: cannonBall
+ * ---------------------------------------
+ * Takes in the height of pyramid and returns the number of cannonballs.
+ * Cannonballs is stacked to form a pyramid with 1 on the top, 4, below,
+ * 9 belows and so on
+ */
+
+int cannonBall(int height)
+{
+    if (height == 1)
+        return 1;
+    return pow(height, 2) + cannonBall(height - 1);
+}
+
+/*
+ * Function: getTitiusBodeDistance
+ * ---------------------------------------
+ * Return distance from the sun to the planet would like to calculate.
+ * Titius-Bode Law, calculating the distance from the sun to each of the
+ * planets by first writing down the sequence:
+ * b1 = 1; b2 = 3; b3 = 6; b4 = 12; b5 = 24; b6 = 48; ...
+ *                        4 + bi
+ * Distance formula: di = ------
+ *                          10
+ * di is expressed in astronomical units (AU) corresponding to the average
+ * distance from earth to sun 93,000,000 miles:
+ *      1. Mercucy     0.5 AU
+ *      2. Venus       0.7 AU
+ *      3. Earth       1.0 AU
+ *      4. Mars        1.6 AU
+ *      5. ?           2.8 AU
+ *      6. Jupiter     5.2 AU
+ *      7. Saturn     10.0 AU
+ *      8. Uranus     19.6 AU
+ */
+
+double getTitiusBodeDistance(int i) { return 0.4 + double(TitiusBodeSeq(i)) / 10; }
+int TitiusBodeSeq(int i)
+{
+    if (i == 1)
+        return 1;
+    if (i == 2)
+        return 3;
+    return 2 * TitiusBodeSeq(i - 1);
+}

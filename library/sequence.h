@@ -15,5 +15,8 @@ int additiveSequence(int n, int t0, int t1);
 void HailstoneSequence(int n);
 void LeibnizSeries();
 void rectangleCircle(int r);
+int cannonBall(int height);
+double getTitiusBodeDistance(int i);
+int TitiusBodeSeq(int i);
 
 #endif

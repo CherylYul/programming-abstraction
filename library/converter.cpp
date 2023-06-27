@@ -6,103 +6,36 @@
 
 #include <iostream>
 #include <cmath>
+#include <iomanip>
 #include "converter.h"
 using namespace std;
 
 /*
- * Function: degC2F
- * Usage: double results = degC2F(double deg);
+ * Function: degC2F, degF2C
+ * Usage: double results = degC2F(deg);
+ *        double results = degF2C(deg);
  * -----------------------------------------------
- * Convert Celsius degree to Fahrenheit degrees
+ * Convert Celsius degree to Fahrenheit degrees and vice versa.
  */
 
-double degC2F(double deg)
-{
-    return (9 / 5) * deg + 32;
-}
+double degC2F(double deg) { return (9 / 5) * deg + 32; }
+double degF2C(double deg) { return (deg - 32) * (5 / 9); }
 
 /*
- * Function: degF2C
- * Usage: double results = degF2C(double deg);
+ * Function: distM2I, distI2M, distM2F, distF2M, distF2I, distI2F
+ * Usage: distM2I(dist); distI2M(dist);
+ *        distM2F(dist); distF2M(dist);
+ *        distF2I(dist); distI2F(dist);
  * -----------------------------------------------
- * Convert Fahrenheit degree to Celsius degrees
+ * Convert meters, inches, feets these 3 measure together.
  */
 
-double degF2C(double deg)
-{
-    return (deg - 32) * (5 / 9);
-}
-
-/*
- * Function: distM2I
- * Usage: distM2I(dist);
- * -----------------------------------------------
- * Convert meters to inches
- */
-
-double distM2I(double dist)
-{
-    return dist / (12 * 0.0254);
-}
-
-/*
- * Function: distI2M
- * Usage: distI2M(dist);
- * -----------------------------------------------
- * Convert inches to meters
- */
-
-double distI2M(double dist)
-{
-    return dist * 12 * 0.0254;
-}
-
-/*
- * Function: distM2F
- * Usage: distM2F(dist);
- * -----------------------------------------------
- * Convert meters to feets
- */
-
-double distM2F(double dist)
-{
-    return dist / 0.0254;
-}
-
-/*
- * Function: distF2M
- * Usage: distF2M(dist);
- * -----------------------------------------------
- * Convert feets to meters
- */
-
-double distF2M(double dist)
-{
-    return dist * 0.0254;
-}
-
-/*
- * Function: distF2I
- * Usage: distF2I(dist);
- * -----------------------------------------------
- * Convert feets to inches
- */
-
-double distF2I(double dist)
-{
-    return dist * 12;
-}
-
-/*
- * Function: distI2F
- * Usage: distI2F(dist);
- * -----------------------------------------------
- * Convert inches to feets
- */
-double distI2F(double dist)
-{
-    return dist / 12;
-}
+double distM2I(double dist) { return dist / (12 * 0.0254); }
+double distI2M(double dist) { return dist * 12 * 0.0254; }
+double distM2F(double dist) { return dist / 0.0254; }
+double distF2M(double dist) { return dist * 0.0254; }
+double distF2I(double dist) { return dist * 12; }
+double distI2F(double dist) { return dist / 12; }
 
 /*
  * Function: windChill
@@ -118,6 +51,23 @@ double windChill(double windSpeed, double degF)
     if (windSpeed == 0)
         return degF;
     return 35.74 + 0.6215 * degF - 35.75 * pow(windSpeed, 0.16) + 0.4275 * degF * pow(windSpeed, 0.16);
+}
+
+void windChillTable()
+{
+    cout << right << fixed;
+    cout << setw(4) << "Calm"
+         << "|";
+    for (int temp = 40; temp >= -45; temp = temp - 5)
+        cout << setw(4) << temp << "|";
+    cout << endl;
+    for (int speed = 5; speed <= 60; speed = speed + 5)
+    {
+        cout << setw(4) << speed << "|";
+        for (int temp = 40; temp >= -45; temp = temp - 5)
+            cout << setw(4) << setprecision(0) << windChill(speed, temp) << "|";
+        cout << endl;
+    }
 }
 
 /*

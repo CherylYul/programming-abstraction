@@ -21,10 +21,8 @@ int countSpaces(string str)
 {
     int numSpaces = 0;
     for (int i = 0; i < str.length(); i++)
-    {
         if (str[i] == ' ')
             numSpaces++;
-    }
     return numSpaces;
 }
 
@@ -40,10 +38,8 @@ bool startsWith(string str, string prefix)
     if (str.length() < prefix.length())
         return false;
     for (int i = 0; i < prefix.length(); i++)
-    {
         if (str[i] != prefix[i])
             return false;
-    }
     return true;
 }
 
@@ -60,10 +56,8 @@ bool endsWith(string str, string suffix)
         return false;
     int distance = str.length() - suffix.length();
     for (int i = 0; i < suffix.length(); i++)
-    {
         if (suffix[i] != str[i + distance])
             return false;
-    }
     return true;
 }
 
@@ -78,9 +72,7 @@ string repeatChar(char ch, int k)
 {
     string str = "";
     for (int i = 0; i < k; i++)
-    {
         str += ch;
-    }
     return str;
 }
 
@@ -89,16 +81,19 @@ string repeatChar(char ch, int k)
  * Usage: string result = reverse(str);
  * -----------------------------------------------
  * Reverse the argument string so that "desserts" turn to "stressed"
+ * using loop or recursion
  */
 
 string reverse(string str)
 {
-    string rev = "";
-    for (int i = str.length() - 1; i >= 0; i--)
-    {
-        rev += str[i];
-    }
-    return rev;
+    // string rev = "";
+    // for (int i = str.length() - 1; i >= 0; i--)
+    //     rev += str[i];
+    // return rev;
+    if (str.length() < 2)
+        return str;
+    int endPos = str.length() - 1;
+    return str[endPos] + reverse(str.substr(0, endPos));
 }
 
 /*
@@ -113,10 +108,8 @@ bool isDigitString(string str)
     if (str.length() == 0)
         return false;
     for (int i = 0; i < str.length(); i++)
-    {
         if (!isdigit(str[i]))
             return false;
-    }
     return true;
 }
 
@@ -132,10 +125,8 @@ bool equalsIgnoreCase(string str1, string str2)
     if (str1.length() != str2.length())
         return false;
     for (int i = 0; i < str1.length(); i++)
-    {
         if (tolower(str1[i]) != tolower(str2[i]))
             return false;
-    }
     return true;
 }
 
@@ -149,9 +140,7 @@ bool equalsIgnoreCase(string str1, string str2)
 void toUpperCaseInPlace(string &str)
 {
     for (int i = 0; i < str.length(); i++)
-    {
         str[i] = toupper(str[i]);
-    }
 }
 
 /*
@@ -164,9 +153,7 @@ void toUpperCaseInPlace(string &str)
 void toLowerCaseInPlace(string &str)
 {
     for (int i = 0; i < str.length(); i++)
-    {
         str[i] = tolower(str[i]);
-    }
 }
 
 /*
@@ -383,9 +370,7 @@ std::string capitalize(std::string str)
     char initialChar = toupper(str[0]);
     string newStr;
     for (int i = 1; i < str.length(); i++)
-    {
         newStr += tolower(str[i]);
-    }
     return initialChar + newStr;
 }
 
@@ -403,10 +388,8 @@ std::string acronym(std::string str)
     if (isalpha(str[0]))
         newStr += str[0];
     for (int i = 0; i < str.length(); i++)
-    {
         if (isspace(str[i]) || !isalpha(str[i]))
             newStr += str[i + 1];
-    }
     return newStr;
 }
 

@@ -75,7 +75,7 @@ double randomAverage(int trials)
  * checks whether the result is less than the requested probability
  */
 
-bool randomChance(int p)
+bool randomChance(double p)
 {
     initRandomSeed();
     return randomReal(0, 1) < p;

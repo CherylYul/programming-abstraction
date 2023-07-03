@@ -6,6 +6,7 @@
 
 #include "card.h"
 #include <iostream>
+#include <vector>
 using namespace std;
 
 Card::Card() {}
@@ -145,6 +146,38 @@ string Card::suitToString(Suit s)
     }
 }
 
+int Card::rankToInteger(Rank r)
+{
+    switch (r)
+    {
+    case Two:
+        return 2;
+    case Three:
+        return 3;
+    case Four:
+        return 4;
+    case Five:
+        return 5;
+    case Six:
+        return 6;
+    case Seven:
+        return 7;
+    case Eight:
+        return 8;
+    case Nine:
+        return 9;
+    case Ten:
+    case Jack:
+    case Queen:
+    case King:
+        return 10;
+    case Ace:
+        return 1;
+    default:
+        return 0;
+    }
+}
+
 ostream &operator<<(ostream &os, Card card)
 {
     return os << card.toString();
@@ -162,6 +195,36 @@ Suit operator++(Suit &s, int)
     Suit old = s;
     s = Suit(s + 1);
     return old;
+}
+
+/*
+ * Function: countSubsetSum
+ * Usage: int n = countSubsetSum(cards, target);
+ * ---------------------------------------
+ * Count the subset of cards that add to a target number. Ex, in Cribbage
+ * game, playing 5 cards: AD, 5C, 10S, 4H, 9C have 3 ways to sum to 15:
+ * AD + 10S + 4H, AD + 5C + 9C, 5C + 10S
+ *     Card card1("AD"); Card card2("5C"); Card card3("10S");
+ *     Card card4("4H"); Card card5("9C"); Card card6("5D");
+ *     Card card7("5H"); Card card8("5S"); Card card9("JC");
+ *     vector<Card> cards = {card2, card6, card7, card8, card9}; // 8
+ *     vector<Card> cards = {card1, card2, card3, card4, card5}; // 3
+ *     cout << countSubsetSum(cards, 15) << endl;
+ */
+
+int countSubsetSum(vector<Card> cards, int target)
+{
+    if (cards.empty())
+    {
+        if (target == 0)
+            return 1;
+        else
+            return 0;
+    }
+    Card cardN = cards.back();
+    int value = cardN.rankToInteger(cardN.cardRank);
+    cards.pop_back();
+    return countSubsetSum(cards, target) + countSubsetSum(cards, target - value);
 }
 
 void displayCard()

@@ -56,12 +56,12 @@ public:
     Card(Rank r, Suit s);
 
     std::string toString();
-
     std::string getRank();
     std::string getSuit();
 
     // friend Rank operator++(Rank r);
     // friend Suit operator++(Suit s);
+    friend int countSubsetSum(std::vector<Card> cards, int target);
 
 private:
     Rank cardRank;
@@ -70,12 +70,13 @@ private:
     Suit stringToSuit(std::string str);
     std::string rankToString(Rank r);
     std::string suitToString(Suit s);
+    int rankToInteger(Rank r);
 };
 
 std::ostream &operator<<(std::ostream &os, Card card);
 Rank operator++(Rank &r, int);
 Suit operator++(Suit &s, int);
-
+int countSubsetSum(std::vector<Card> cards, int target);
 void displayCard();
 
 #endif

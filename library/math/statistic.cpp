@@ -93,7 +93,8 @@ int permutations(int n, int k)
  * return 24 different results
  */
 
-void permute(string soFar, string rest)
+void permute(string str) { permute1("", str); }
+void permute1(string soFar, string rest)
 {
     if (rest == "")
     {
@@ -103,7 +104,22 @@ void permute(string soFar, string rest)
     for (int i = 0; i < rest.length(); i++)
     {
         string remaining = rest.substr(0, i) + rest.substr(i + 1);
-        permute(soFar + rest[i], remaining);
+        permute1(soFar + rest[i], remaining);
+    }
+}
+
+void permute2(string str, int lhp, int rhp)
+{
+    if (lhp == rhp)
+        cout << str << endl;
+    else
+    {
+        for (int i = lhp; i <= rhp; i++)
+        {
+            swap(str[lhp], str[i]);      // swapping
+            permute2(str, lhp + 1, rhp); // recursion call
+            swap(str[lhp], str[i]);      // backtracking
+        }
     }
 }
 
@@ -169,4 +185,11 @@ double maxVec(vector<double> &data)
         if (*i > maxValue)
             maxValue = *i;
     return maxValue;
+}
+
+void swap(char &a, char &b)
+{
+    char temp = a;
+    a = b;
+    b = a;
 }

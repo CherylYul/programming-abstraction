@@ -1,0 +1,17 @@
+.vscode
+.pro.user
+.app
+.DS_Store
+.o
+.env
+.log
+/Stanford/
+/build-CS106-Qt_6_5_1_for_macOS-Debug/
+/build-Cantor-Qt_6_5_1_for_macOS-Debug/
+/build-Coastline-Qt_6_5_1_for_macOS-Debug/
+/build-Mondrian-Qt_6_5_1_for_macOS-Debug/
+/build-Snowflake-Qt_6_5_1_for_macOS-Debug/
+/build-SolveArithmetic-Qt_6_5_1_for_macOS-Debug/
+/build-TickMeasure-Qt_6_5_1_for_macOS-Debug/
+/build-ToonShade-Qt_6_5_1_for_macOS-Debug/
+/build-Towers-Of-Hanoi-Qt_6_5_1_for_macOS-Debug/

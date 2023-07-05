@@ -12,5 +12,22 @@
 /fractal/build-TickMeasure-Qt_6_5_1_for_macOS-Debug/
 /fractal/build-TreeFractal-Qt_6_5_1_for_macOS-Debug/
 
+/fractal/Cantor/Cantor.app/
+/fractal/Cantor/Cantor.pro.user
+/fractal/Coastline.app/
+/fractal/Coastline/Coastline.pro.user
+/fractal/Hfractal/Hfractal.app/
+/fractal/Hfractal/Hfractal.pro.user
+/fractal/Mondrian/Mondrian.app/
+/fractal/Mondrian/Mondrian.pro.user
+/fractal/Sierpinski/Sierpinski.app/
+/fractal/Sierpinski/Sierpinski.pro.user
+/fractal/Snowflake/Snowflake.app/
+/fractal/Snowflake/Snowflake.pro.user
+/fractal/TickMeasure/TickMeasure.app/
+/fractal/TickMeasure/TickMeasure.pro.user
+/fractal/TreeFractal/TreeFractal.app/
+/fractal/TreeFractal/TreeFractal.pro.user
+
 /build-ToonShade-Qt_6_5_1_for_macOS-Debug/
 /build-Towers-Of-Hanoi-Qt_6_5_1_for_macOS-Debug/

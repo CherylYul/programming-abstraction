@@ -29,5 +29,15 @@
 /fractal/TreeFractal/TreeFractal.app/
 /fractal/TreeFractal/TreeFractal.pro.user
 
+/art/build-CheckerBoard-Qt_6_5_1_for_macOS-Debug/
+/art/CheckerBoard/CheckerBoard.app/
+/art/CheckerBoard/CheckerBoard.pro.user
+/art/build-Rainbow-Qt_6_5_1_for_macOS-Debug/
+/art/Rainbow/Rainbow.app/
+/art/Rainbow/Rainbow.pro.user
+/art/build-YinYang-Qt_6_5_1_for_macOS-Debug/
+/art/YinYang/YinYang.app/
+/art/YinYang/YinYang.pro.user
+
 /build-ToonShade-Qt_6_5_1_for_macOS-Debug/
 /build-Towers-Of-Hanoi-Qt_6_5_1_for_macOS-Debug/

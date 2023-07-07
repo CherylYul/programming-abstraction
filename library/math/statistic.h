@@ -16,6 +16,7 @@ int permutations(int n, int k);
 void permute(std::string str);
 void permute1(std::string soFar, std::string rest);
 void permute2(std::string str, int lhp, int rhp);
+void listSubsets(std::string input, std::string soFar);
 
 double sum(std::vector<double> &data);
 double mean(std::vector<double> &data);

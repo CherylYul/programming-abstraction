@@ -123,6 +123,27 @@ void permute2(string str, int lhp, int rhp)
     }
 }
 
+/*
+ * Functions: listSubsets
+ * ---------------------------------------
+ * Find all possible subsets of S. Ex subset of ABC will have 8 cases:
+ * {ABC}, {A}, {B}, {C}, {AB}, {AC}, {BC}, {}, we can choose A or not, B or not,
+ * C or not, finally have 2^N choices. Same problem solving for string bits and
+ * flip coins
+ */
+
+void listSubsets(string input, string soFar)
+{
+    if (input == "")
+        cout << soFar << endl;
+    else
+    {
+        char consider = input[0];
+        listSubsets(input.substr(1), soFar);            // explore without
+        listSubsets(input.substr(1), soFar + consider); // explore with
+    }
+}
+
 double sum(vector<double> &data)
 {
     double sum = 0;

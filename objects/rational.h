@@ -4,6 +4,7 @@
  * This interface exports a class for representing rational numbers.
  */
 
+#pragma once
 #ifndef _rational_h
 #define _rational_h
 #include <string>

@@ -80,8 +80,8 @@ void tokenScanner::skipWhitespace()
  * read C++ source code
  */
 
-
-void scanCPlusPlusTokens(tokenScanner &scanner) {
+void scanCPlusPlusTokens(tokenScanner &scanner)
+{
     scanner.ignoreWhiteSpace();
     scanner.ignoreComments();
     scanner.scanNumbers();

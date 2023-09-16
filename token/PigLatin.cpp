@@ -13,12 +13,12 @@
 #include <iostream>
 #include <string>
 #include <cctype>
-#include "lexicon.h"
+// #include "lexicon.h"
 using namespace std;
 
 /* Function Prototype */
 string lineToPigLatin(string line);
-string wordToPigLatin(string word);
+string wordToPigLatin(string word, bool isCap);
 int findFirstVowel(string word);
 bool isVowel(char ch);
 void pigEnglish();
@@ -62,24 +62,17 @@ string lineToPigLatin(string line)
     int start = -1;
     for (int i = 0; i < line.length(); i++)
     {
-        char ch = line[i];
-        if (isalpha(ch))
+        bool isText = isalpha(line[i]);
+        if (isText && start == -1)
+            start = i;
+        if (!isText && start >= 0)
         {
-            if (start == -1)
-                start = i;
-        }
-        else
-        {
-            if (start >= 0)
-            {
-                result += wordToPigLatin(line.substr(start, i - start));
-                start = -1;
-            }
-            result += ch;
+            result += wordToPigLatin(line.substr(start, i - start), isupper(line[start])) + line[i];
+            start = -1;
         }
     }
     if (start >= 0)
-        result += wordToPigLatin(line.substr(start));
+        result += wordToPigLatin(line.substr(start), isupper(line[start]));
     return result;
 }
 
@@ -91,23 +84,18 @@ string lineToPigLatin(string line)
  * specified in the text. The translated word is returned as the value of the function.
  */
 
-string wordToPigLatin(string word)
+string wordToPigLatin(string word, bool isCap)
 {
     int vp = findFirstVowel(word);
     if (vp == -1)
-    {
         return word;
-    }
-    else if (vp == 0)
-    {
+    if (vp == 0)
         return word + "way";
-    }
-    else
-    {
-        string head = word.substr(0, vp);
-        string tail = word.substr(vp);
-        return tail + head + "ay";
-    }
+    char oldStart = isCap ? tolower(word[0]) : word[0];
+    char newStart = isCap ? toupper(word[vp]) : word[vp];
+    string head = word.substr(1, vp - 1);
+    string tail = word.substr(vp + 1);
+    return newStart + tail + oldStart + head + "ay";
 }
 
 /*
@@ -160,15 +148,15 @@ bool isVowel(char ch)
  * Find all English words that remain words when convert to Pig Latin
  */
 
-void pigEnglish()
-{
-    Lexicon english("EnglishWords.dat");
-    for (string word : english)
-    {
-        string pig = wordToPigLatin(word);
-        if (pig != word && english.contains(pig))
-        {
-            cout << word << " -> " << pig << endl;
-        }
-    }
-}
+// void pigEnglish()
+// {
+//     Lexicon english("EnglishWords.dat");
+//     for (string word : english)
+//     {
+//         string pig = wordToPigLatin(word);
+//         if (pig != word && english.contains(pig))
+//         {
+//             cout << word << " -> " << pig << endl;
+//         }
+//     }
+// }

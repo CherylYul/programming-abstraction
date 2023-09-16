@@ -569,3 +569,10 @@ int strlen(char *str)
         ;
     return cp - str;
 }
+
+void printNTimes(char c, int n)
+{
+    for (int i = 0; i < n; i++)
+        cout << c;
+    cout << endl;
+}

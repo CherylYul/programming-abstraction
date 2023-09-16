@@ -56,4 +56,6 @@ std::string addCommas(int digits);
 int strlen(char str[]);
 int strlen(char *cp);
 
+void printNTimes(char c, int n);
+
 #endif

@@ -23,4 +23,17 @@ std::string getRoot(const std::string &filename);
 std::string defaultExtension(const std::string filename, const std::string ext);
 
 void error(std::string msg);
+
+// ifstream infile;
+// int chCount = 0;
+// int wCount = 0;
+// int lCount = 0;
+// promptUserForFile(infile, "Input file: ");
+// reportLineWordChar(infile, chCount, wCount, lCount);
+// printLongestLine(infile);
+// infile.close();
+// cout << chCount << endl;
+// cout << wCount << endl;
+// cout << lCount << endl;
+
 #endif

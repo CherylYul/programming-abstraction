@@ -23,21 +23,27 @@ int main()
     return 0;
 }
 
-void drawCheckerBoard(GWindow &gw) {
+void drawCheckerBoard(GWindow &gw)
+{
     bool tileCol = false;
-    for (int x = 0; x < SCREEN_WIDTH; x += TILES) {
+    for (int x = 0; x < SCREEN_WIDTH; x += TILES)
+    {
         tileCol = !tileCol;
-        for (int y = 0; y < SCREEN_HEIGHT; y += TILES) {
+        for (int y = 0; y < SCREEN_HEIGHT; y += TILES)
+        {
             if (tileCol)
                 gw.setColor("white");
-            else {
+            else
+            {
                 gw.setColor("lightgray");
                 gw.fillRect(x, y, TILES, TILES);
-                if (y < 150) {
+                if (y < 150)
+                {
                     gw.setColor("red");
                     gw.fillOval(x + 5, y + 5, PIECES, PIECES);
                 }
-                if (y > 200) {
+                if (y > 200)
+                {
                     gw.setColor("black");
                     gw.fillOval(x + 5, y + 5, PIECES, PIECES);
                 }
@@ -46,5 +52,3 @@ void drawCheckerBoard(GWindow &gw) {
         }
     }
 }
-
-

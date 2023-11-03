@@ -1,7 +1,7 @@
 /*
  * File: maze.h
  * ---------------------------------------
- * This iinterface exports the maze class
+ * This interface exports the maze class
  */
 
 #ifndef _maze_h
@@ -16,15 +16,16 @@ class Maze
 {
 public:
     Maze(std::vector<std::vector<char>> maze, Point start);
+    Point findEndPos();
     Point getStartPosition();
     Point getEndPosition();
+    int findShortestPath();
     bool solveMaze();
     bool internalSolveMaze(Point pos, std::vector<std::vector<bool>> &mark);
+    void internalSolveMaze(Point pos, std::vector<std::vector<bool>> &mark, int steps);
     Point nextPosition(Point pos, Direction dir);
     bool isMovable(Point pos, Direction dir);
-    void shortestPathLength();
-    void internalShortestPathLength(Point pos, std::vector<std::vector<bool>> &mark,
-                                    int &steps, int &countSols, vector<int> &sols);
+    vector<vector<bool>> copyMazeMark();
     std::string toString();
 
 private:
@@ -33,9 +34,12 @@ private:
     int mazeHeight;
     Point startPos;
     Point endPos;
-    vector<Point> endPosList;
+    vector<int> listSolutions;
 };
 
-void printVec(vector<vector<bool>> vec);
+std::ostream &operator<<(std::ostream &os, std::vector<int> vec);
+std::string toString(std::vector<int> vec);
+std::ostream &operator<<(std::ostream &os, std::vector<vector<bool>> vec);
+std::string toString(std::vector<std::vector<bool>> vec);
 
 #endif

@@ -1,5 +1,6 @@
 #include "maze.h"
 #include <iostream>
+#include <ostream>
 using namespace std;
 
 /*
@@ -16,23 +17,30 @@ Maze::Maze(vector<vector<char>> maze, Point start)
     mazeWidth = m[0].size();
     mazeHeight = m.size();
     startPos = start;
+    endPos = this->findEndPos();
+}
+
+Point Maze::findEndPos()
+{
+    vector<Point> listEndPos;
     for (int i = 1; i < mazeWidth - 1; i++)
     {
         if (m[0][i] == ' ')
-            endPosList.push_back(Point(0, i));
+            listEndPos.push_back(Point(0, i));
         if (m[mazeHeight - 1][i] == ' ')
-            endPosList.push_back(Point(mazeHeight - 1, i));
+            listEndPos.push_back(Point(mazeHeight - 1, i));
     }
     for (int i = 1; i < mazeHeight - 1; i++)
     {
         if (m[i][0] == ' ')
-            endPosList.push_back(Point(i, 0));
+            listEndPos.push_back(Point(i, 0));
         if (m[i][mazeWidth - 1] == ' ')
-            endPosList.push_back(Point(i, mazeWidth - 1));
+            listEndPos.push_back(Point(i, mazeWidth - 1));
     }
-    for (Point pos : endPosList)
+    for (Point pos : listEndPos)
         if (pos != startPos)
-            endPos = pos;
+            return pos;
+    return Point(0, 0);
 }
 
 /*
@@ -46,23 +54,45 @@ Point Maze::getStartPosition() { return startPos; };
 Point Maze::getEndPosition() { return endPos; };
 
 /*
- * Function: solveMaze
- * Usage: solveMaze();
+ * Function: findShortestPath()
+ * Usage: maze.findShortestPath()
  * ---------------------------------------
- * Attempts to generate a solution to the current maze with specified start point.
- * It returns true when finding solution. Use recursion to solve submazes resulting
- * from marking the current square and moving 1 step along each open passage.
+ * Find the shortest path if the maze exists solutions, otherwise returns 0.
+ */
+
+int Maze::findShortestPath()
+{
+    if (!listSolutions.empty())
+    {
+        cout << "Total Solutions: " << listSolutions.size() << endl;
+        cout << "Steps for each solutions: " << listSolutions << endl;
+        int minStep = listSolutions[0];
+        for (int step : listSolutions)
+            if (step < minStep)
+                minStep = step;
+        return minStep;
+    }
+    cout << "You must call maze.solveMaze() before calling maze.findShortestPath()." << endl;
+    return 0;
+}
+
+/*
+ * Function: solveMaze
+ * Usage: maze.solveMaze();
+ * ---------------------------------------
+ * Attempts to generate a solution to the current maze with specified start point
+ * by using recursion to solve submazes resulting from marking the current square
+ * and moving 1 step along each open passage.
+ * 1. internalSolveMaze(pos, mark): returns true when find a solution.
+ * 2. internalSolveMaze(pos, mark, steps): show all solutions for maze and therefore
+ * can show the shortest path.
  */
 
 bool Maze::solveMaze()
 {
-    vector<vector<bool>> path(mazeHeight);
-    for (int i = 0; i < mazeHeight; i++)
-    {
-        vector<bool> w(mazeWidth, false);
-        path[i] = w;
-    }
-    return internalSolveMaze(startPos, path);
+    vector<vector<bool>> mark = this->copyMazeMark();
+    internalSolveMaze(startPos, mark, 0);
+    return !listSolutions.empty();
 }
 
 bool Maze::internalSolveMaze(Point pos, vector<vector<bool>> &mark)
@@ -78,16 +108,35 @@ bool Maze::internalSolveMaze(Point pos, vector<vector<bool>> &mark)
     {
         if (isMovable(pos, dir))
         {
-            // cout << "Start:" << endl;
-            // printVec(mark);
             if (internalSolveMaze(nextPosition(pos, dir), mark))
                 return true;
-            // cout << "Out:" << endl;
-            // printVec(mark);
         }
     }
     mark[x][y] = false;
     return false;
+}
+
+void Maze::internalSolveMaze(Point pos, vector<vector<bool>> &mark, int steps)
+{
+    if (pos == endPos)
+    {
+        // cout << "Solve maze with: " << steps << endl;
+        // cout << mark << endl;
+        listSolutions.push_back(steps);
+    }
+    int x = pos.getX();
+    int y = pos.getY();
+    if (mark[x][y])
+        return;
+    mark[x][y] = true;
+    ++steps;
+    for (Direction dir = NORTH; dir <= WEST; dir++)
+    {
+        if (isMovable(pos, dir))
+            internalSolveMaze(nextPosition(pos, dir), mark, steps);
+    }
+    mark[x][y] = false;
+    --steps;
 }
 
 /*
@@ -130,65 +179,22 @@ bool Maze::isMovable(Point pos, Direction dir)
 }
 
 /*
- * Function: shortestPathLength
- * Usage: maze.shortestPathLength();
+ * Function: copyMazeMark
+ * Usage: maze.copyMazeMark();
  * ---------------------------------------
- * Show all solutions for maze and returns the shortest path!
+ * Create a boolean table that suports for checking whether the object crosses
+ * over the position or not
  */
 
-void Maze::shortestPathLength()
+vector<vector<bool>> Maze::copyMazeMark()
 {
-    vector<vector<bool>> path(mazeHeight);
+    vector<vector<bool>> mark(mazeHeight);
     for (int i = 0; i < mazeHeight; i++)
     {
-        vector<bool> w(mazeWidth, false);
-        path[i] = w;
+        vector<bool> width(mazeWidth, false);
+        mark[i] = width;
     }
-    int steps = 0;
-    int countSols = 0;
-    vector<int> sols;
-    internalShortestPathLength(startPos, path, steps, countSols, sols);
-
-    cout << "Total Solutions: " << countSols << endl;
-    cout << "Steps for each solutions: ";
-    for (int i : sols)
-        cout << i << " ";
-    cout << endl;
-    cout << "Shortest Path: ";
-    if (sols.size() > 0)
-    {
-        int minPath = sols[0];
-        for (int i = 1; i < sols.size(); i++)
-            if (sols[i] < minPath)
-                minPath = sols[i];
-        cout << minPath << endl;
-    }
-}
-
-void Maze::internalShortestPathLength(Point pos, vector<vector<bool>> &mark,
-                                      int &steps, int &countSols, vector<int> &sols)
-{
-    if (pos == endPos)
-    {
-        cout << "Solve maze with: " << steps << endl;
-        cout << "Solve maze with mark: " << endl;
-        printVec(mark);
-        sols.push_back(steps);
-        ++countSols;
-    }
-    int x = pos.getX();
-    int y = pos.getY();
-    if (mark[x][y])
-        return;
-    mark[x][y] = true;
-    ++steps;
-    for (Direction dir = NORTH; dir <= WEST; dir++)
-    {
-        if (isMovable(pos, dir))
-            internalShortestPathLength(nextPosition(pos, dir), mark, steps, countSols, sols);
-    }
-    mark[x][y] = false;
-    --steps;
+    return mark;
 }
 
 /*
@@ -210,19 +216,24 @@ string Maze::toString()
     return str;
 }
 
-/*
- * Function: printVec
- * Usage: printVec(vec);
- * ---------------------------------------
- * Print the bool vec which represents the solution path of the maze
- */
-
-void printVec(vector<vector<bool>> vec)
+ostream &operator<<(ostream &os, vector<int> vec) { return os << toString(vec); }
+string toString(vector<int> vec)
 {
+    string str = "[";
+    for (int i : vec)
+        str += integerToString(i) + ", ";
+    return str + "]";
+}
+
+ostream &operator<<(ostream &os, vector<vector<bool>> vec) { return os << toString(vec); }
+string toString(vector<vector<bool>> vec)
+{
+    string str = "";
     for (vector<bool> v : vec)
     {
         for (bool b : v)
-            cout << b;
-        cout << endl;
+            str += integerToString(b) + ", ";
+        str += "\n";
     }
+    return str;
 }

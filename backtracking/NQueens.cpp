@@ -6,6 +6,9 @@
  */
 
 #include <iostream>
+#include <ostream>
+#include <sstream>
+#include <fstream>
 #include <vector>
 using namespace std;
 
@@ -13,7 +16,9 @@ void nQueenSolution(int chessBoardLength);
 void nQueen(int r, int c, vector<bool> &col, vector<vector<bool>> &chessBoard);
 bool checkDiagonal(int row, int col, vector<vector<bool>> chessBoard);
 bool checkOffDiagonal(int row, int col, vector<vector<bool>> chessBoard);
-void printVec(vector<vector<bool>> vec);
+ostream &operator<<(ostream &os, vector<vector<bool>> vec);
+string toString(vector<vector<bool>> vec);
+string boolToString(bool b);
 
 int main()
 {
@@ -42,7 +47,7 @@ void nQueen(int r, int c, vector<bool> &col, vector<vector<bool>> &chessBoard)
     if (r == col.size() - 1)
     {
         cout << "Result: " << endl;
-        printVec(chessBoard);
+        cout << chessBoard << endl;
         chessBoard[r][c] = false;
         col[c] = false;
         return;
@@ -78,13 +83,21 @@ bool checkOffDiagonal(int row, int col, vector<vector<bool>> chessBoard)
     return true;
 }
 
-void printVec(vector<vector<bool>> vec)
+string boolToString(bool b)
 {
-    for (vector<bool> colors : vec)
+    ostringstream stream;
+    stream << b;
+    return stream.str();
+}
+ostream &operator<<(ostream &os, vector<vector<bool>> vec) { return os << toString(vec); }
+string toString(vector<vector<bool>> vec)
+{
+    string str = "";
+    for (vector<bool> v : vec)
     {
-        for (bool color : colors)
-            cout << color;
-        cout << endl;
+        for (bool b : v)
+            str += boolToString(b);
+        str += "\n";
     }
-    cout << endl;
+    return str;
 }

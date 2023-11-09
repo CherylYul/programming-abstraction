@@ -5,7 +5,7 @@
  * red, blue, green, and white. The goal is to arrange the cubes in a row or column such
  * that no color is duplicated on a side.
  *
- * Cube 1:           Solution:
+ * Cube 1:           Solution (Total 8 solutions)
  *         G                 G                        Top
  * W | B | B | R     W | B | B | R      Back | Left | Front | Right
  *         G                 G                        Bottom
@@ -36,12 +36,12 @@ using namespace std;
 
 enum Face
 {
-    TOP,
     BOTTOM,
+    RIGHT,
     FRONT,
-    BACK,
     LEFT,
-    RIGHT
+    TOP,
+    BACK,
 };
 
 enum Color
@@ -53,13 +53,15 @@ enum Color
 };
 
 const vector<string> COLOR_NAME = {"W", "B", "R", "G"};
-const vector<string> FACE_NAME = {"TOP", "BOTTOM", "FRONT", "BACK", "LEFT", "RIGHT"};
+const vector<string> FACE_NAME = {"BOTTOM", "RIGHT", "FRONT", "LEFT", "TOP", "BACK"};
 void solution(vector<map<Face, Color>> cubes);
 void solution(vector<map<Face, Color>> &cubes,
               vector<map<Face, Color>> &solvedCubes,
               vector<map<Color, bool>> &mark,
               vector<vector<Face>> &faceList);
-bool isValid(map<Face, Color> cube, vector<Face> onFace, vector<map<Color, bool>> mark);
+bool isValid(map<Face, Color> cube,
+             vector<Face> onFace,
+             vector<map<Color, bool>> mark);
 void check(map<Face, Color> cube,
            vector<Face> onFace,
            vector<map<Color, bool>> &mark,
@@ -70,18 +72,16 @@ void uncheck(map<Face, Color> cube,
              vector<vector<Face>> &faceList);
 vector<Face> offFace(Face face);
 vector<Face> rotate(vector<Face> oldSides, int pos);
+void printSolution(vector<map<Face, Color>> cubes, vector<vector<Face>> faceList);
 Face operator++(Face &dir);
 Face operator++(Face &dir, int);
 ostream &operator<<(ostream &os, map<Face, Color> cube);
 string toString(map<Face, Color> cube);
-string boolToString(bool b);
-string printMark(vector<map<Color, bool>> mark);
-void printFaceList(vector<map<Face, Color>> cubes, vector<vector<Face>> faceList);
 
 int main()
 {
     map<Face, Color> cube4 = {{FRONT, B}, {BACK, W}, {TOP, G}, {BOTTOM, G}, {LEFT, B}, {RIGHT, R}};
-    map<Face, Color> cube3 = {{FRONT, G}, {BACK, W}, {TOP, R}, {BOTTOM, W}, {LEFT, W}, {RIGHT, B}};
+    map<Face, Color> cube3 = {{FRONT, G}, {BACK, W}, {TOP, R}, {BOTTOM, G}, {LEFT, W}, {RIGHT, B}};
     map<Face, Color> cube2 = {{FRONT, W}, {BACK, R}, {TOP, W}, {BOTTOM, G}, {LEFT, R}, {RIGHT, B}};
     map<Face, Color> cube1 = {{FRONT, R}, {BACK, G}, {TOP, B}, {BOTTOM, W}, {LEFT, R}, {RIGHT, R}};
     vector<map<Face, Color>> cubes = {cube1, cube2, cube3, cube4};
@@ -107,7 +107,6 @@ void solution(vector<map<Face, Color>> cubes)
         {{W, false}, {B, false}, {R, false}, {G, false}},
         {{W, false}, {B, false}, {R, false}, {G, false}}};
     solution(cubes, solvedCubes, mark, faceList);
-    printFaceList(solvedCubes, faceList);
 }
 
 void solution(vector<map<Face, Color>> &cubes,
@@ -116,22 +115,17 @@ void solution(vector<map<Face, Color>> &cubes,
               vector<vector<Face>> &faceList)
 {
     if (solvedCubes.size() == 4)
+    {
+        printSolution(solvedCubes, faceList);
         return;
+    }
     solvedCubes.push_back(cubes.back());
     cubes.pop_back();
-    printFaceList(solvedCubes, faceList);
-    for (map<Face, Color> cube : solvedCubes)
-        cout << cube << endl;
-    cout << "Check cubes number " << solvedCubes.size() << endl;
-
-    for (Face face = TOP; face <= RIGHT; face++)
+    for (Face face = BOTTOM; face <= BACK; face++)
     {
-        cout << "Check face: " << FACE_NAME[face] << endl;
         vector<Face> onFace = offFace(face);
-        cout << printMark(mark) << endl;
         for (int pos = 0; pos < 4; pos++)
         {
-            cout << "Check position: " << pos << endl;
             vector<Face> onFacePos = rotate(onFace, pos);
             if (isValid(solvedCubes.back(), onFacePos, mark))
             {
@@ -231,16 +225,17 @@ vector<Face> offFace(Face face)
  */
 vector<Face> rotate(vector<Face> oldSides, int pos)
 {
-    vector<Face> newSides;
-    while (newSides.size() < 4)
+    switch (pos)
     {
-        newSides.push_back(oldSides[pos]);
-        if (pos == 3)
-            pos = 0;
-        else
-            pos++;
+    case 1:
+        return vector<Face>{oldSides[1], oldSides[2], oldSides[3], oldSides[0]};
+    case 2:
+        return vector<Face>{oldSides[2], oldSides[3], oldSides[0], oldSides[1]};
+    case 3:
+        return vector<Face>{oldSides[3], oldSides[0], oldSides[1], oldSides[2]};
+    default:
+        return oldSides;
     }
-    return newSides;
 }
 
 Face operator++(Face &dir)
@@ -265,30 +260,21 @@ string toString(map<Face, Color> cube)
     return result + "]\n";
 }
 
-string printMark(vector<map<Color, bool>> mark)
+void printSolution(vector<map<Face, Color>> cubes, vector<vector<Face>> faceList)
 {
-    string result = "";
-    for (map<Color, bool> it : mark)
-        result += boolToString(it[B]) +
-                  boolToString(it[W]) +
-                  boolToString(it[G]) +
-                  boolToString(it[R]) + "\n";
-    return result;
-}
-
-string boolToString(bool b)
-{
-    ostringstream stream;
-    stream << b;
-    return stream.str();
-}
-
-void printFaceList(vector<map<Face, Color>> cubes, vector<vector<Face>> faceList)
-{
+    cout << "Solution: " << endl;
+    // print out face name
+    for (vector<Face> faces : faceList)
+    {
+        for (Face face : faces)
+            cout << FACE_NAME[face] << " ";
+        cout << endl;
+    }
+    // print out color name
     for (int i = 0; i < cubes.size(); i++)
     {
-        for (int j = 0; j < 4; j++)
-            cout << COLOR_NAME[cubes[i][faceList[i][j]]];
+        for (int j = 0; j < faceList.size(); j++)
+            cout << COLOR_NAME[cubes[i][faceList[i][j]]] << " ";
         cout << endl;
     }
 }
